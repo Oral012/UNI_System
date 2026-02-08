@@ -1,22 +1,31 @@
-package uni.system;
+package uni.system.model;
 public class User {
     private String name;
     private String email;
     private String password;
     private String role;
-    private String userId;
+    private  static int userId;
+    private String status;
 
-    User (String name, String email, String password, String role, String userId){
+    public User (String name, String email, String password, String role, String status){
         setName(name);
         setEmail(email);
         setPassword(password);
         setRole(role);
-        setUserId(userId);
+        setStatus(status);
+        userId++;
     }
 
     public String getName() {
         return name;
     }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getStatus() {
+        return status;
+    }
+    
     public void setName( String name){
         if( name.isBlank()){
             throw new IllegalArgumentException("Name must not be blank.");
@@ -41,13 +50,6 @@ public class User {
         }
         this.role = role;
     }
-    public void setUserId( String userId){
-        if( userId.isBlank()){
-            throw new IllegalArgumentException("ID must not be blank.");
-        }
-        this.userId = userId;
-    }
-    
 
     public String getEmail() {
         return email;
@@ -58,14 +60,14 @@ public class User {
     public String getRole() {
         return role;
     }
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
     @Override
     public String toString() {
-        return "User [name=" + name + ", email=" + email + ", password=" + password + ", role=" + role + ", userId="
-                + userId + "]";
+        return "Name =" + name + "\n" +"Email = "+ email +"\n"+ "Password = " + password + "\n"+ "Role= " 
+        + role +"\n"+ "UserId = " + userId;
     }
     
 }

@@ -1,10 +1,10 @@
-package uni.system;
+package uni.system.model;
 
 public class Course {
     private String courseId;
     private String courseName;
     private double credit;
-    Course (String courseId, String courseName, double credit){
+    public Course (String courseId, String courseName, double credit){
         setCourseId(courseId);
         setCourseName(courseName);
         setCredit(credit);

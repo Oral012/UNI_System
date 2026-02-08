@@ -1,17 +1,18 @@
-package uni.system;
+package uni.system.model;
+
+// import uni.system.class.Student;
+// import uni.system.Course;
 
 public class Enrollment {
     private Student student;
     private Course course;
     private String semester;
     private int enrollYear;
-    private String status;
-    public Enrollment(Student student, Course course, String semester, int enrollYear, String status) {
+    public Enrollment(Student student, Course course, String semester, int enrollYear) {
         this.student = student;
         this.course = course;
         setSemester(semester);
         setEnrollYear(enrollYear);
-        this.status = "Active";
     }
     public Student getStudent() {
         return student;
@@ -25,9 +26,6 @@ public class Enrollment {
     public int getEnrollYear() {
         return enrollYear;
     }
-    public String getStatus() {
-        return status;
-    }
     public void setEnrollYear(int enrollYear ){
         if(enrollYear <2000){
             throw new IllegalArgumentException("Can not accept year.!");
@@ -40,5 +38,14 @@ public class Enrollment {
         }
         this.semester = semester;
     }
+    @Override
+    public String toString() {
+        return   student.getName() + ", Course: " + course.getCourseName() + ", Semester: " + semester + ", Year: " + (2026 - enrollYear);
+    }
+    public void printInfo(){
+        student.printInfo();
+    }
+    }
     
-}
+    
+
