@@ -1,5 +1,8 @@
 package uni.system.model;
-public class User {
+
+import uni.system.repo.Iuser;
+
+public class User implements Iuser{
     private String name;
     private String email;
     private String password;
@@ -37,10 +40,18 @@ public class User {
     public String getPassword() {
         return password;
     }
-
     @Override
     public String toString() {
         return "Name =" + name + "\n" +"Email = "+ email +"\n"+ "Password = " + password +"\n";
     }
+
+    @Override
+    public boolean login(String username, String password) {
+        return this.name.equals(username) &&
+               this.password.equals(password);
+    }
+
+
+    
     
 }

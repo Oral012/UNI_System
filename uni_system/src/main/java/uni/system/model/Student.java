@@ -15,6 +15,15 @@ public class  Student extends User {
         studentId++;
         enrollment = new ArrayList<>();
     }
+    
+    // Getters methods
+    public int getYearLevel(){ return yearLevel;}
+    public Department getDepartment(){ return department;}
+    public String getMajor() {return major;}
+    public int getStudentId() { return studentId; }
+    
+    
+    // Setters methods
     public void setDepartment(Department department) {
         if(department == null){
             throw new IllegalArgumentException("Department must not be null.");
@@ -27,25 +36,13 @@ public class  Student extends User {
         }
         this.yearLevel = yearLevel;
     }
-    public int getYearLevel(){
-        return yearLevel;
-    }
-    public Department getDepartment(){
-        return department;
-    }
-    public String getMajor() {
-        return major;
-    }
-    public int getStudentId() {
-        return studentId;
-    }
-
     public void setMajor(String major) {
         if(major.isBlank()){
             throw new IllegalArgumentException("major must not be blank.");
         }
         this.major = major;
     }
+
     public String encryptPassword(){
         String password = getPassword();
         String encrypt = "";
