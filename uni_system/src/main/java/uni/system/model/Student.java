@@ -1,25 +1,43 @@
 package uni.system.model;
-
-
+import java.util.ArrayList;
+import uni.system.service.Enrollment;
 public class  Student extends User {
+    private Department department;
     private String major;
-    private double gpa;
-    
-    public Student (String name, String email, String password, String role, String status,  String major, double gpa){
-        super( name, email, password, role, status);    //use constructor of Parent class ( User class)
-        setGpa(gpa);
+    private static int studentId;
+    private int yearLevel;
+    ArrayList<Enrollment> enrollment;
+    public Student (String name, String email, String password, Department department, String major, int yearLevel){
+        super( name, email, password);    //use constructor of Parent class ( User class)
+        setDepartment(department);
         setMajor(major);
-        
-        
+        setYearLevel(yearLevel);
+        studentId++;
+        enrollment = new ArrayList<>();
+    }
+    public void setDepartment(Department department) {
+        if(department == null){
+            throw new IllegalArgumentException("Department must not be null.");
+        }
+        this.department = department;
+    }
+    public void setYearLevel(int yearLevel) {
+        if(yearLevel < 1 || yearLevel > 4){
+            throw new IllegalArgumentException("Year level must be between 1 and 4.");
+        }
+        this.yearLevel = yearLevel;
+    }
+    public int getYearLevel(){
+        return yearLevel;
+    }
+    public Department getDepartment(){
+        return department;
     }
     public String getMajor() {
         return major;
     }
-    public double getGpa() {
-        return gpa;
-    }
-    public String getRole ( ) {
-        return "STUDENT";
+    public int getStudentId() {
+        return studentId;
     }
 
     public void setMajor(String major) {
@@ -27,12 +45,6 @@ public class  Student extends User {
             throw new IllegalArgumentException("major must not be blank.");
         }
         this.major = major;
-    }
-    public void setGpa(double gpa) {    
-        if( gpa < 0 || gpa > 4 ){
-            throw new IllegalArgumentException("GPA is not correct.");
-        }
-        this.gpa = gpa;
     }
     public String encryptPassword(){
         String password = getPassword();
@@ -42,13 +54,9 @@ public class  Student extends User {
         }
         return encrypt;
     }
-    @Override
-    public String toString() {
-        return "major=" + major + ", gpa=" + gpa;
-    }
+
     public void printInfo(){
-        System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n"+ "Password = " + encryptPassword() + "\n"+ "Role= " 
-        + getRole() +"\n" +"UserId = IDTB" + getUserId());
+        System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n"+ "Password = " + encryptPassword() +"\n");
     }
     
     

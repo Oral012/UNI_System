@@ -4,10 +4,32 @@ public class Course {
     private String courseId;
     private String courseName;
     private double credit;
-    public Course (String courseId, String courseName, double credit){
+    private Department department;
+    private int yearLevel;
+    public Course (String courseId, String courseName, double credit, Department department, int yearLevel){
         setCourseId(courseId);
         setCourseName(courseName);
         setCredit(credit);
+        setDepartment(department);
+        setYearLevel(yearLevel);
+    }
+    public void setDepartment(Department department) {
+        if(department == null){
+            throw new IllegalArgumentException("Department must not be null.");
+        }
+        this.department = department;
+    }
+    public void setYearLevel(int yearLevel) {
+        if(yearLevel < 1 || yearLevel > 4){
+            throw new IllegalArgumentException("Year level must be between 1 and 4.");
+        }
+        this.yearLevel = yearLevel;
+    }
+    public int getYearLevel() {
+        return yearLevel;
+    }
+    public Department getDepartment() {
+        return department;
     }
     public void setCourseId(String courseId) {
         if( courseId.isBlank()){

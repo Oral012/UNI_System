@@ -3,27 +3,14 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String role;
-    private  static int userId;
-    private String status;
-
-    public User (String name, String email, String password, String role, String status){
+    public User (String name, String email, String password){
         setName(name);
         setEmail(email);
         setPassword(password);
-        setRole(role);
-        setStatus(status);
-        userId++;
     }
 
     public String getName() {
         return name;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public String getStatus() {
-        return status;
     }
     
     public void setName( String name){
@@ -44,30 +31,16 @@ public class User {
         }
         this.password = password;
     }
-    public void setRole( String role){
-        if( role.isBlank()){
-            throw new IllegalArgumentException("Role must not be blank.");
-        }
-        this.role = role;
-    }
-
     public String getEmail() {
         return email;
     }
     public String getPassword() {
         return password;
     }
-    public String getRole() {
-        return role;
-    }
-    public int getUserId() {
-        return userId;
-    }
 
     @Override
     public String toString() {
-        return "Name =" + name + "\n" +"Email = "+ email +"\n"+ "Password = " + password + "\n"+ "Role= " 
-        + role +"\n"+ "UserId = " + userId;
+        return "Name =" + name + "\n" +"Email = "+ email +"\n"+ "Password = " + password +"\n";
     }
     
 }
