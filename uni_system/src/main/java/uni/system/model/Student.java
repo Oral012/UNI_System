@@ -4,15 +4,15 @@ import uni.system.service.Enrollment;
 public class  Student extends User {
     private Department department;
     private String major;
-    private static int studentId;
+    private String studentId;
     private int yearLevel;
-    ArrayList<Enrollment> enrollment;
-    public Student (String name, String email, String password, Department department, String major, int yearLevel){
+    private ArrayList<Enrollment> enrollment;
+    public Student (String name, String email,String studentId, String password, Department department, String major, int yearLevel){
         super( name, email, password);    //use constructor of Parent class ( User class)
         setDepartment(department);
         setMajor(major);
         setYearLevel(yearLevel);
-        studentId++;
+        setStudentId(studentId);
         enrollment = new ArrayList<>();
     }
     
@@ -20,8 +20,8 @@ public class  Student extends User {
     public int getYearLevel(){ return yearLevel;}
     public Department getDepartment(){ return department;}
     public String getMajor() {return major;}
-    public int getStudentId() { return studentId; }
-    
+    public String getStudentId() { return studentId; }
+    public ArrayList<Enrollment> getEnrollment() { return enrollment;}
     
     // Setters methods
     public void setDepartment(Department department) {
@@ -37,24 +37,43 @@ public class  Student extends User {
         this.yearLevel = yearLevel;
     }
     public void setMajor(String major) {
-        if(major.isBlank()){
-            throw new IllegalArgumentException("major must not be blank.");
-        }
+        if(major.isBlank()) throw new IllegalArgumentException("major must not be blank.");
         this.major = major;
     }
+    public void setStudentId(String studentId) {
+        if (studentId.isBlank()) throw new IllegalArgumentException("Student ID error");
+        this.studentId = studentId;
+    }
+    public void setEnrollment(ArrayList<Enrollment> enrollment) {
+        if( enrollment.isEmpty()) throw new IllegalArgumentException("list is empty");
+        this.enrollment = enrollment;
+    }
 
-    public String encryptPassword(){
-        String password = getPassword();
-        String encrypt = "";
-        for( int i = 0; i< password.length(); i++){
-            encrypt += "*";
+   
+    public void addEnrollment( Enrollment enrollment){
+        if ( !enrollment.equals(null)){
+            this.enrollment.add(enrollment);
         }
-        return encrypt;
     }
-
+    public void removeEnrollment( Enrollment enrollment){
+        if (!enrollment.equals(null)){
+            this.enrollment.remove(enrollment);
+        }
+    }
+    @Override
+    public void viewProfile() {
+        // TODO Auto-generated method stub
+        System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n"+ "Department = " + department.getDepartmentName() + "\n"
+         + "Major = " + major + "\n" + "Year Level = " + yearLevel);
+        
+    }
     public void printInfo(){
-        System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n"+ "Password = " + encryptPassword() +"\n");
+        System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n");
     }
-    
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return super.toString();
+    }
     
 }

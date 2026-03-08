@@ -2,20 +2,16 @@ package uni.system.model;
 
 import uni.system.repo.Iuser;
 
-public class User implements Iuser{
+public abstract class User implements Iuser{
     private String name;
     private String email;
     private String password;
     public User (String name, String email, String password){
+        
         setName(name);
         setEmail(email);
         setPassword(password);
     }
-
-    public String getName() {
-        return name;
-    }
-    
     public void setName( String name){
         if( name.isBlank()){
             throw new IllegalArgumentException("Name must not be blank.");
@@ -34,12 +30,11 @@ public class User implements Iuser{
         }
         this.password = password;
     }
-    public String getEmail() {
-        return email;
-    }
-    public String getPassword() {
-        return password;
-    }
+    // Getters methods
+    public String getName() { return name;}
+    public String getEmail() { return email;}
+    //public String getPassword() {return password;}
+
     @Override
     public String toString() {
         return "Name =" + name + "\n" +"Email = "+ email +"\n"+ "Password = " + password +"\n";
@@ -50,6 +45,7 @@ public class User implements Iuser{
         return this.name.equals(username) &&
                this.password.equals(password);
     }
+    public  abstract void viewProfile();
 
 
     
