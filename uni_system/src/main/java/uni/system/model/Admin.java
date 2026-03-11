@@ -1,15 +1,14 @@
 package uni.system.model;
 
-import uni.system.repo.Iuser;
 
-public class Admin extends User implements Iuser {
+public class Admin extends User  {
     
     public Admin ( String name, String email, String password, String role, String status ){
-        super(name, email, password);
+        super(name, email, password, Role.ADMIN);
     }
     
-    public String getRole ( ) {
-        return "Admin";
+    public Role getRole ( ) {
+        return  super.getRole();
     }
     
     @Override

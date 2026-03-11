@@ -1,16 +1,16 @@
 package uni.system.model;
 
-import uni.system.repo.Iuser;
-
-public abstract class User implements Iuser{
+public abstract class User { // need to implement later
     private String name;
     private String email;
     private String password;
-    public User (String name, String email, String password){
+    private Role role;
+    public User (String name, String email, String password, Role role){
         
         setName(name);
         setEmail(email);
         setPassword(password);
+        this.role = role;
     }
     public void setName( String name){
         if( name.isBlank()){
@@ -33,6 +33,7 @@ public abstract class User implements Iuser{
     // Getters methods
     public String getName() { return name;}
     public String getEmail() { return email;}
+    public Role getRole () {return role;}
     //public String getPassword() {return password;}
 
     @Override
@@ -40,11 +41,7 @@ public abstract class User implements Iuser{
         return "Name =" + name + "\n" +"Email = "+ email +"\n"+ "Password = " + password +"\n";
     }
 
-    @Override
-    public boolean login(String username, String password) {
-        return this.name.equals(username) &&
-               this.password.equals(password);
-    }
+
     public  abstract void viewProfile();
 
 

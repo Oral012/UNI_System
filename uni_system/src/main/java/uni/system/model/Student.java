@@ -1,14 +1,14 @@
 package uni.system.model;
 import java.util.ArrayList;
 import uni.system.service.Enrollment;
-public class  Student extends User {
-    private Department department;
-    private String major;
-    private String studentId;
-    private int yearLevel;
+public  abstract class  Student extends User {
+    private Department  department;
+    private String      major;
+    private String      studentId;
+    private int         yearLevel;
     private ArrayList<Enrollment> enrollment;
     public Student (String name, String email,String studentId, String password, Department department, String major, int yearLevel){
-        super( name, email, password);    //use constructor of Parent class ( User class)
+        super( name, email, password, Role.STUDENT);   
         setDepartment(department);
         setMajor(major);
         setYearLevel(yearLevel);
@@ -66,9 +66,6 @@ public class  Student extends User {
         System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n"+ "Department = " + department.getDepartmentName() + "\n"
          + "Major = " + major + "\n" + "Year Level = " + yearLevel);
         
-    }
-    public void printInfo(){
-        System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n");
     }
     @Override
     public String toString() {
