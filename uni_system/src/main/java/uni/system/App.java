@@ -4,6 +4,7 @@ import uni.system.action.EnrollmentStudent;
 import uni.system.model.Course;
 import uni.system.model.Enrollment;
 import uni.system.model.Student;
+
 public class App 
 {
     public static void main( String[] args )
