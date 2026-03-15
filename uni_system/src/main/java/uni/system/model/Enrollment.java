@@ -4,18 +4,30 @@ package uni.system.model;
 // import uni.system.Course;
 
 public class Enrollment {
+    public enum EnrollmentStatus {
+        ENROLLED,
+        DROPPED,
+        COMPLETED
+    }
+
     private Student student;
     private Course course;
     private String semester;
     private int enrollYear;
+    private EnrollmentStatus status;
+
     public Enrollment(Student student, Course course, String semester, int enrollYear) {
         this.student = student;
         this.course = course;
         setSemester(semester);
         setEnrollYear(enrollYear);
+        this.status = EnrollmentStatus.ENROLLED;
     }
     public Student getStudent() {
         return student;
+    }
+    public EnrollmentStatus getStatus() {
+        return status;
     }
     public Course getCourse() {
         return course;
@@ -40,12 +52,26 @@ public class Enrollment {
     }
     @Override
     public String toString() {
-        return   student.getName() + ", Course: " + course.getCourseName() + ", Semester: " + semester + ", Year: " + (2026 - enrollYear);
+        return   student.getName() + ", Course: " + course.getCourseName() + ", Semester: " + semester + ", Year: " + (2026 - enrollYear) + ", Status: " + getStatus();
     }
     public void printInfo(){
         student.printInfo();
     }
+
+    public void dropCourse(){
+        this.status = EnrollmentStatus.DROPPED;
     }
+    public void completedCourse(){
+        this.status = EnrollmentStatus.COMPLETED;
+    }
+    public boolean isActive(){
+        return status == EnrollmentStatus.ENROLLED;
+    }
+
+
+    }
+
+    
     
     
 

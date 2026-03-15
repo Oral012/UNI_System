@@ -15,12 +15,15 @@ public class App
       Course c2 = new Course("ITE", "COMPUTER ARCHITECTURE", 3);
       Student s3 = new Student("sore", "sore@123", "12345", "Student", "ACTIVE", "COMPUTER SCIENCE", 3.0);
       Course c3 = new Course("SE", "COMPUTER ARCHITECTURE", 3);
-      Enrollment classes = new Enrollment(s1, c1, "Y2T1", 2024);
-      Enrollment class1 = new Enrollment(s2, c2, "Y1T3", 2022);
-      Enrollment class2 = new Enrollment(s3, c3, "Y3T1", 2023);
-      EnrollmentStudent enrollment = new EnrollmentStudent(classes);
-      enrollment.addStudent(class1);
-      enrollment.addStudent(class2);
+      Enrollment e1 = new Enrollment(s1, c1, "Y2T1", 2024);
+      Enrollment e2 = new Enrollment(s2, c2, "Y1T3", 2022);
+      Enrollment e3 = new Enrollment(s3, c3, "Y3T1", 2023);
+      
+      
+      EnrollmentStudent enrollment = new EnrollmentStudent();
+      enrollment.enrollStudent(e1);
+      enrollment.enrollStudent(e2);
+      enrollment.enrollStudent(e3);
       enrollment.printEnrollment();
       System.out.println("-----------------------------");
       enrollment.printIndividual(1);//For specific information
