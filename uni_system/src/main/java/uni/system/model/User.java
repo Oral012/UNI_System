@@ -1,5 +1,8 @@
 package uni.system.model;
-public class User {
+
+import uni.system.repo.Iuser;
+
+public  abstract class User  implements Iuser{
     private String name;
     private String email;
     private String password;
@@ -9,10 +12,17 @@ public class User {
         setPassword(password);
     }
 
+    // Getters methods
     public String getName() {
         return name;
     }
-    
+    public String getEmail() {
+        return email;
+    }
+    public String getPassword() {
+        return password;
+    }
+    // Seeters methods
     public void setName( String name){
         if( name.isBlank()){
             throw new IllegalArgumentException("Name must not be blank.");
@@ -31,16 +41,10 @@ public class User {
         }
         this.password = password;
     }
-    public String getEmail() {
-        return email;
-    }
-    public String getPassword() {
-        return password;
-    }
 
     @Override
     public String toString() {
-        return "Name =" + name + "\n" +"Email = "+ email +"\n"+ "Password = " + password +"\n";
+        return "Name =" + name + "\n" +"Email = "+ email +"\n";
     }
     
 }

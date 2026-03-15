@@ -9,5 +9,12 @@ public class Admin extends User {
     public String getRole ( ) {
         return "Admin";
     }
+    @Override
+    public void viewProfile() {
+     // TODO Auto-generated method stub
+     System.out.println("Name = " + getName() + "\n" 
+        + "Email = " + getEmail() + "\n"
+        + "Role = " + getRole() );         
+    }
     
 }

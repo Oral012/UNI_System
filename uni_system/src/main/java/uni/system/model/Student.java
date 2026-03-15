@@ -4,17 +4,18 @@ import uni.system.service.Enrollment;
 public class  Student extends User {
     private Department department;
     private String major;
-    private static int studentId;
+    private String studentId;
     private int yearLevel;
     ArrayList<Enrollment> enrollment;
-    public Student (String name, String email, String password, Department department, String major, int yearLevel){
+    public Student (String name, String email, String password, String studentId,  Department department, String major, int yearLevel){
         super( name, email, password);    //use constructor of Parent class ( User class)
         setDepartment(department);
         setMajor(major);
         setYearLevel(yearLevel);
-        studentId++;
+        setStudentId(studentId);
         enrollment = new ArrayList<>();
     }
+    // Setters methods
     public void setDepartment(Department department) {
         if(department == null){
             throw new IllegalArgumentException("Department must not be null.");
@@ -27,6 +28,18 @@ public class  Student extends User {
         }
         this.yearLevel = yearLevel;
     }
+    public void setMajor(String major) {
+        if(major.isBlank()){
+            throw new IllegalArgumentException("major must not be blank.");
+        }
+        this.major = major;
+    }
+    public void setStudentId (String studentId){
+        if( studentId.isBlank()) throw new IllegalArgumentException("Student Id must not be blank.");
+        this.studentId = studentId;
+    }
+
+    // Getters methods
     public int getYearLevel(){
         return yearLevel;
     }
@@ -36,28 +49,55 @@ public class  Student extends User {
     public String getMajor() {
         return major;
     }
-    public int getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
-
-    public void setMajor(String major) {
-        if(major.isBlank()){
-            throw new IllegalArgumentException("major must not be blank.");
-        }
-        this.major = major;
+    // methods
+    @Override
+    public void viewProfile(){
+        System.out.println("Name = " + getName() + "\n" 
+        + "Student ID = " + getStudentId() + "\n"
+        + "Email = " + getEmail() + "\n"
+        + "Department = " + getDepartment() + "\n"
+        + "Major = " + getMajor() + "\n"
+        + "Year Level = " + getYearLevel() + "\n"
+        );
     }
-    public String encryptPassword(){
-        String password = getPassword();
-        String encrypt = "";
-        for( int i = 0; i< password.length(); i++){
-            encrypt += "*";
+    public void addEnrollment(Enrollment e){
+        if ( e == null){
+            throw new IllegalArgumentException("Enroll cannot be null.");
         }
-        return encrypt;
+        enrollment.add(e);
     }
-
-    public void printInfo(){
-        System.out.println("Name = " + getName() + "\n" +"Email = "+ getEmail() +"\n"+ "Password = " + encryptPassword() +"\n");
+    public void removeEnrollment(Enrollment e){
+        if ( e == null){
+            throw new IllegalArgumentException("Enroll cannot be null.");
+        }
+        enrollment.remove(e);
+    }
+    
+    public void viewEnrolledCourses(){
+        System.out.println("---------------- Enrolled Courses ----------------" );
+        if( enrollment.isEmpty()){
+            System.out.println("No enrolled courses.");
+        } else {
+            for ( Enrollment e : enrollment){
+                System.out.println( e.getCourse().getCourseId() + " - " + e.getCourse().getCourseName() );
+            }
+        }
+    }
+    public void viewAvailableCourses(ArrayList<Course> courses){
+        System.out.println("---------------- Available Courses ----------------" );
+        if( courses.isEmpty()){
+            System.out.println("No available courses.");
+        } else {
+            for ( Course c : courses){
+                if( c.getDepartment().getDepartmentCode().equals(this.getDepartment().getDepartmentCode()) ){
+                System.out.println( c.getCourseId() + " - " + c.getCourseName() );
+            }
+        }
     }
     
     
+    }
 }
