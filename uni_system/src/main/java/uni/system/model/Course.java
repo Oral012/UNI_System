@@ -38,7 +38,7 @@ public class Course {
         this.courseId = courseId;
     }
     public void setCourseName(String courseName) {
-         if( courseName.isBlank()){
+        if( courseName.isBlank()){
             throw new IllegalArgumentException("Name can not be empty!.");
         }
         this.courseName = courseName;
