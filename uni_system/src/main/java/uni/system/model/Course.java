@@ -52,9 +52,14 @@ public class Course {
 public String getCourseId() {
     return courseId;
 }
+
 @Override
 public String toString() {
-    return "Course courseId=" + courseId + ", courseName=" + courseName + ", credit=" + credit;
+    return "Course ID: " + courseId +
+           ", Name: " + courseName +
+           ", Credit: " + credit +
+           ", Department: " + department.getDepartmentName() +
+           ", Year Level: " + yearLevel;
 }
 public String getCourseName() {
     return courseName;
