@@ -1,5 +1,4 @@
 package uni.system.model;
-import java.util.ArrayList;
 
 public class Department {
     private String departmentName;
@@ -9,13 +8,13 @@ public class Department {
         setDepartmentCode(departmentCode);
     }
     public void setDepartmentName(String departmentName) {
-        if(departmentName.isBlank()){
+        if(departmentName == null || departmentName.trim().isEmpty()){
             throw new IllegalArgumentException("Department name must not be blank.");
         }
         this.departmentName = departmentName;
     }
     public void setDepartmentCode(String departmentCode) {
-        if(departmentCode.isBlank()){
+        if(departmentCode == null || departmentCode.trim().isEmpty()){
             throw new IllegalArgumentException("Department code must not be blank.");
         }
         this.departmentCode = departmentCode;

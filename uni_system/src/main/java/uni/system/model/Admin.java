@@ -1,14 +1,16 @@
 package uni.system.model;
 
-public class Admin extends User {
+
+public class Admin extends User  {
+    public Admin ( String name, String email, String password, String adminId){
+        super(name, email, password, Role.ADMIN);
+    }
+
     
-    public Admin ( String name, String email, String password, String role, String status ){
-        super(name, email, password);
+    public Role getRole ( ) {
+        return  super.getRole();
     }
     
-    public String getRole ( ) {
-        return "Admin";
-    }
     @Override
     public void viewProfile() {
      // TODO Auto-generated method stub

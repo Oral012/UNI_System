@@ -1,24 +1,18 @@
 package uni.system.model;
 
-import uni.system.repo.Iuser;
-
-public  abstract class User  implements Iuser{
+public  abstract class User  {
     private String name;
     private String email;
     private String password;
-    public User (String name, String email, String password){
+    private Role role;
+    public User (String name, String email, String password, Role role){
+        
         setName(name);
         setEmail(email);
         setPassword(password);
+        this.role = role;
     }
 
-    // Getters methods
-    public String getName() {
-        return name;
-    }
-    public String getEmail() {
-        return email;
-    }
     public String getPassword() {
         return password;
     }
@@ -42,9 +36,21 @@ public  abstract class User  implements Iuser{
         this.password = password;
     }
 
+    // Getters methods
+    public String getName() { return name;}
+    public String getEmail() { return email;}
+    public Role getRole () {return role;}
+    //public String getPassword() {return password;}
+
     @Override
     public String toString() {
         return "Name =" + name + "\n" +"Email = "+ email +"\n";
     }
+
+
+    public  abstract void viewProfile();
+
+
+    
     
 }

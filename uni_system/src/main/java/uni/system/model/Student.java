@@ -1,6 +1,7 @@
 package uni.system.model;
 import java.util.ArrayList;
 import uni.system.service.Enrollment;
+
 public class  Student extends User {
     private Department department;
     private String major;
@@ -8,7 +9,7 @@ public class  Student extends User {
     private int yearLevel;
     ArrayList<Enrollment> enrollment;
     public Student (String name, String email, String password, String studentId,  Department department, String major, int yearLevel){
-        super( name, email, password);    //use constructor of Parent class ( User class)
+        super( name, email, password, Role.STUDENT);    //use constructor of Parent class ( User class)
         setDepartment(department);
         setMajor(major);
         setYearLevel(yearLevel);
@@ -63,15 +64,30 @@ public class  Student extends User {
         + "Year Level = " + getYearLevel() + "\n"
         );
     }
-    public void addEnrollment(Enrollment e){
-        if ( e == null){
-            throw new IllegalArgumentException("Enroll cannot be null.");
+    public void addEnrollment(Course course){
+        if ( course == null){
+            throw new IllegalArgumentException("course cannot be null.");
         }
+        for( Enrollment e : enrollment){
+            if( e.getCourse().getCourseId().equals(course.getCourseId()) ){
+                throw new IllegalArgumentException("Already enrolled this course.");
+            }
+        }
+        Enrollment e = new Enrollment( this, course);
         enrollment.add(e);
     }
-    public void removeEnrollment(Enrollment e){
+    public void removeEnrollment(String courseId){
+        if( courseId.isBlank()) throw new IllegalArgumentException("CourseId must not be blank.");
+
+        Enrollment e = null;
+        for( Enrollment enrollment : enrollment){
+            if( enrollment.getCourse().getCourseId().equals(courseId) ){
+                e = enrollment;
+                break;
+            }
+        }
         if ( e == null){
-            throw new IllegalArgumentException("Enroll cannot be null.");
+            throw new IllegalArgumentException("Not enrolled this course.");
         }
         enrollment.remove(e);
     }

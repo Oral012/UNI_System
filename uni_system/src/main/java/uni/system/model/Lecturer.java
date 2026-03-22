@@ -8,7 +8,7 @@ public class Lecturer  extends User{
     private String specialization;
     private ArrayList<Course> assignedCourses;
     public Lecturer (String name, String email, String password, Department department, String lecturerId, String specialization){
-        super(name, email, password);
+        super(name, email, password, Role.LECTURER);
         setDepartment(department);
         setLecturerId(lecturerId);
         setSpecialization(specialization);

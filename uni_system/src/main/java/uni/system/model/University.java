@@ -1,0 +1,63 @@
+package uni.system.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class University {
+    private String name;
+    private String address;
+    ArrayList<Department> departments;
+    List<User> users;
+    public University( String name, String address){
+        if (name.isBlank()) throw new IllegalArgumentException("University name must not be blank.");
+        if (address.isBlank()) throw new IllegalArgumentException("University address must not be blank.");
+        this.name = name;
+        this.address = address;
+        departments = new ArrayList<>();
+        users = new ArrayList<>();
+    }
+    //getter methods
+    public String getName() {
+        return name;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public ArrayList<Department> getDepartments() {
+        return departments;
+    }
+    public List<User> getUsers() {
+        return users;
+    }
+    //methods
+    public void addDepartment(Department department){
+        departments.add(department);
+    }
+    public void addUser( User user){
+        users.add(user);
+    }
+    public void deleteUser(User user){
+        users.remove(user);
+    }
+    public void addListOfUsers(List <User> users){
+        for ( User user : users){
+            addUser(user);
+        }
+    }
+    public void printAllUsers(){
+        for ( User user : users){
+            System.out.println(user.getName() + "-" + user.getRole());
+        }
+    }
+    public User login( String name, String password){
+        for ( User user : users){
+            if ( user.getName().equals(name) && user.getPassword().equals(password)){
+                System.out.println("Login successful. Welcome, " + user.getName() + "!");
+                return user;
+            }
+            }
+            System.out.println("Invalid name or password. Pls try again.");
+            return null;
+        } 
+}
+    
