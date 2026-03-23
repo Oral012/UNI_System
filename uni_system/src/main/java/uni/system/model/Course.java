@@ -38,7 +38,7 @@ public class Course {
         this.courseId = courseId;
     }
     public void setCourseName(String courseName) {
-         if( courseName.isBlank()){
+        if( courseName.isBlank()){
             throw new IllegalArgumentException("Name can not be empty!.");
         }
         this.courseName = courseName;
@@ -52,9 +52,14 @@ public class Course {
 public String getCourseId() {
     return courseId;
 }
+
 @Override
 public String toString() {
-    return "Course courseId=" + courseId + ", courseName=" + courseName + ", credit=" + credit;
+    return "Course ID: " + courseId +
+           ", Name: " + courseName +
+           ", Credit: " + credit +
+           ", Department: " + department.getDepartmentName() +
+           ", Year Level: " + yearLevel;
 }
 public String getCourseName() {
     return courseName;
