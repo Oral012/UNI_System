@@ -10,7 +10,7 @@ import uni.system.model.Lecturer;
 import uni.system.model.Role;
 import uni.system.model.Student;
 import uni.system.model.University;
-import uni.system.service.Enrollment;
+
 public class App 
 {
     public static void main( String[] args )
