@@ -1,6 +1,6 @@
 package uni.system.model;
 import java.util.ArrayList;
-import uni.system.service.Enrollment;
+import uni.system.model.Enrollment;
 
 public class  Student extends User {
     private Department department;
