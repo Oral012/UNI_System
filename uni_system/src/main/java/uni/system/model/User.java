@@ -21,11 +21,18 @@ public  abstract class User  {
         if( name.isBlank()){
             throw new IllegalArgumentException("Name must not be blank.");
         }
+        if ( !name.matches("^[a-zA-Z]{3,15}$")) {
+            System.out.println("Name must be 3-15 character and only letter");
+        }
+        
         this.name = name;
     }
     public void setEmail( String email){
         if( email.isBlank() || !email.contains("@")){
             throw new IllegalArgumentException("Email must not be blank or missing @.");
+        }
+        if ( !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]{2,}$")){
+            System.out.println("Email is invalid.");
         }
         this.email = email;
     }

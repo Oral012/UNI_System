@@ -46,7 +46,7 @@ public class University {
     }
     public void printAllUsers(){
         for ( User user : users){
-            System.out.println(user.getName() + "-" + user.getRole());
+            System.out.println(user.getName() + "\t\t" + user.getRole());
         }
     }
     public User login( String name, String password){

@@ -1,5 +1,7 @@
 package uni.system.model;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import uni.system.model.Enrollment;
 
 public class  Student extends User {
@@ -56,6 +58,7 @@ public class  Student extends User {
     // methods
     @Override
     public void viewProfile(){
+        System.out.println("----------------------------------Student Profile----------------------------------");
         System.out.println("Name = " + getName() + "\n" 
         + "Student ID = " + getStudentId() + "\n"
         + "Email = " + getEmail() + "\n"
@@ -63,25 +66,37 @@ public class  Student extends User {
         + "Major = " + getMajor() + "\n"
         + "Year Level = " + getYearLevel() + "\n"
         );
+        System.out.println("----------------------------------------------------------------------------------");
     }
-    public void addEnrollment(Course course){
-        if ( course == null){
-            throw new IllegalArgumentException("course cannot be null.");
+    public void addEnrollment(String courseId, ArrayList<Course> courses){
+        if ( enrollment.size() > 7){
+            System.out.println("You can not enroll more than 7 courses.");
+            return;
         }
-        for( Enrollment e : enrollment){
-            if( e.getCourse().getCourseId().equals(course.getCourseId()) ){
-                throw new IllegalArgumentException("Already enrolled this course.");
+
+        if ( courseId.isBlank()) throw new IllegalArgumentException("CourseId must not be blank.");
+        Course course = null;
+        for (Course c : courses) {
+            if ( c.getCourseId().equalsIgnoreCase(courseId)  &&
+             c.getDepartment().getDepartmentCode().equalsIgnoreCase(this.getDepartment().getDepartmentCode())
+             && c.getYearLevel() == this.getYearLevel() ){
+                course = c;
+                break;
             }
         }
+        if ( course == null) { System.out.println("Course not found or not available for your department and year level."); }
         Enrollment e = new Enrollment( this, course);
         enrollment.add(e);
     }
     public void removeEnrollment(String courseId){
+        if ( enrollment.isEmpty()) {
+            System.out.println("You haven't enrolled any courses yet.");
+        }
         if( courseId.isBlank()) throw new IllegalArgumentException("CourseId must not be blank.");
 
         Enrollment e = null;
         for( Enrollment enrollment : enrollment){
-            if( enrollment.getCourse().getCourseId().equals(courseId) ){
+            if( enrollment.getCourse().getCourseId().equalsIgnoreCase(courseId) ){
                 e = enrollment;
                 break;
             }
@@ -101,6 +116,7 @@ public class  Student extends User {
                 System.out.println( e.getCourse().getCourseId() + " - " + e.getCourse().getCourseName() );
             }
         }
+        System.out.println("--------------------------------------------------");
     }
     public void viewAvailableCourses(ArrayList<Course> courses){
         System.out.println("---------------- Available Courses ----------------" );
@@ -108,12 +124,52 @@ public class  Student extends User {
             System.out.println("No available courses.");
         } else {
             for ( Course c : courses){
-                if( c.getDepartment().getDepartmentCode().equals(this.getDepartment().getDepartmentCode()) ){
+                if( c.getDepartment().getDepartmentCode().equals(this.getDepartment().getDepartmentCode()) 
+                && c.getYearLevel() == this.getYearLevel() ){
                 System.out.println( c.getCourseId() + " - " + c.getCourseName() );
             }
         }
     }
-    
+        System.out.println("--------------------------------------------------");
     
     }
+    public void studentDashboard( Student student, ArrayList<Course> courses){
+        // Accept input
+        Scanner scanner = new Scanner( System.in);
+        do {
+            System.out.println("1. View Profile");
+            System.out.println("2. View Courses");
+            System.out.println("3. View Available Courses");
+            System.out.println("4. Add New Enrollment");
+            System.out.println("5. Drop Course");
+            System.out.println("6. Logout");
+            System.out.println("Enter your choice: ");
+
+      int choice = scanner.nextInt();
+      switch ( choice){
+        case 1:
+          student.viewProfile(); break;
+        case 2: 
+          student.viewEnrolledCourses(); break;
+        case 3: 
+          student.viewAvailableCourses(courses); break;
+        case 4:
+            System.out.println("Enter course ID to enroll: ");
+            String courseId = scanner.next();
+            student.addEnrollment(courseId, courses); break;
+        case 5:
+            System.out.println("Enter course ID to drop: ");
+            String courseIdToDrop = scanner.next();
+            student.removeEnrollment(courseIdToDrop); break;
+        case 6:
+            scanner.close();
+            return;
+        default: 
+            System.out.println("Invalid choice. Please try again.");
+      }
+      
+    } while( true);
+    }
+    
+    
 }

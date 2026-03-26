@@ -1,7 +1,6 @@
 package uni.system;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import uni.system.model.User;
 import uni.system.model.Admin;
 import uni.system.model.Course;
@@ -47,40 +46,84 @@ public class App
 
 
        //course part
-      Course c1 = new Course("CA", "COMPUTER ARCHITECTURE", 3, CS, 2);
-      Course c2 = new Course("ITE", "INTERNET TECHNOLOGY", 3, TN, 1);
-      Course c3 = new Course("SE", "SOFTWARE ENGINEERING", 3, CS, 3);
-      Course c4 = new Course("DB", "DATABASE", 3, DB, 1);
-      Course c5 = new Course("DS", "DATA STRUCTURE", 3, CS, 2);
+      ArrayList<Course> courses = new ArrayList<>();
+      courses.add(new Course("CA", "COMPUTER ARCHITECTURE", 3, CS, 2)); 
+      courses.add(new Course("ITE", "INTERNET TECHNOLOGY", 3, TN, 1) );
+      courses.add ( new Course("SE", "SOFTWARE ENGINEERING", 3, CS, 3));
+      courses.add( new Course( "AI", "ARTIFICIAL INTELLIGENCE", 3, CS, 4));
+      courses.add(new Course("DB", "DATABASE", 3, DB, 1));
+      courses.add(new Course("DS", "DATA STRUCTURE", 3, CS, 2));
+
       
-      university.printAllUsers();
+      // university.printAllUsers();
       Scanner scanner = new Scanner( System.in);
-      System.out.println("Enter your name:");
-      String name = scanner.next();
-      System.out.println("Enter your password:");
-      String password = scanner.next();
-      //Authentication part
-      User currentUser = university.login(name, password);
+      int choice = 0;
+      do { 
+        System.out.println("1. Login");
+        System.out.println("2. Exit");
+        System.out.println("Enter your choice: ");
+        try {
+          choice = scanner.nextInt();
+        } catch ( InputMismatchException e){
+          System.out.println("Invalid input. Please enter a number.");
+          scanner.nextLine();
+          continue;
+        } catch ( NoSuchElementException e) {
+            System.out.println("Thanks for using the system.");
+            scanner.close();
+            return;
+
+        }  // still figure out which exception that we need to catch
+        
+        switch (choice) {
+          case 1:
+            String name = "";
+            String password = "";
+           try {
+              System.out.println("Enter your name:");
+              name = scanner.next();
+              System.out.println("Enter your password:");
+              password = scanner.next();
+            } catch ( InputMismatchException e){
+            System.out.println("Invalid input. Please try again.");
+            scanner.nextLine(); 
+            continue;
+           } catch ( NoSuchElementException e) {
+            System.out.println("Thanks for using the system.");
+            scanner.close();
+           }
+            //Authentication part
+            User currentUser = university.login(name, password);
+            if ( currentUser != null){
+              System.out.println("Login successful! Welcome, " + currentUser.getName() + "!");
+              // // show dashboard based on role
+              // if ( currentUser.getRole() == Role.ADMIN){
+              //   Admin admin = ( Admin ) currentUser;
+              //   adminDashboard(admin);
+              // } else if ( currentUser.getRole() == Role.LECTURER){
+              //   // show lecturer dashboard
+              //   Lecturer lecturer = ( Lecturer ) currentUser;
+              // } else 
+                if ( currentUser.getRole() == Role.STUDENT){
+                // show student dashboard
+                Student student = ( Student ) currentUser;
+                student.studentDashboard(student, courses);
+              }
+            } else {
+              System.out.println("Login failed! Invalid name or password.");
+            }
+          
+            break;
+          case 2:
+            System.out.println("Exiting the system. Have a nice day!");
+            break;
+          default:
+            System.out.println("Invalid choice. Please try again.");
+            break;
+        }
+        
+      } while ( choice != 2);
+      scanner.close();
     }
+  }
 
-    public void adminDashboard( Admin admin){
-
-    }
-
-
-    public void handleUserDashboard( User user){
-      if ( user instanceof Admin){
-        // show admin dashboard
-        Admin admin = ( Admin ) user;
-      } else if ( user instanceof Lecturer){
-        // show lecturer dashboard
-        Lecturer lecturer = ( Lecturer ) user;
-      } else if ( user instanceof Student){
-        // show student dashboard
-        Student student = ( Student ) user;
-
-      }
-      }
-    
-    
-}
