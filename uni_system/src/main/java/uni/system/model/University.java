@@ -51,7 +51,7 @@ public class University {
     }
     public User login( String name, String password){
         for ( User user : users){
-            if ( user.getName().equals(name) && user.getPassword().equals(password)){
+            if ( user.getName().equalsIgnoreCase(name) && user.getPassword().equalsIgnoreCase(password)){
                 System.out.println("Login successful. Welcome, " + user.getName() + "!");
                 return user;
             }

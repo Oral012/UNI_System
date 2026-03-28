@@ -12,17 +12,9 @@ public class Enrollment {
 
     private Student student;
     private Course course;
-    // private String semester;
-    // private int enrollYear;
     private EnrollmentStatus status;
 
-    // public Enrollment(Student student, Course course, String semester, int enrollYear) {
-    //     this.student = student;
-    //     this.course = course;
-    //     setSemester(semester);
-    //     setEnrollYear(enrollYear);
-    //     this.status = EnrollmentStatus.ENROLLED;
-    // }
+
     public Enrollment (Student student, Course course){
         this.student = student;
         this.course = course;
@@ -37,32 +29,11 @@ public class Enrollment {
     public Course getCourse() {
         return course;
     }
-    // public String getSemester() {
-    //     return semester;
-    // }
-    // public int getEnrollYear() {
-    //     return enrollYear;
-    // }
-    // public void setEnrollYear(int enrollYear ){
-    //     if(enrollYear <2000){
-    //         throw new IllegalArgumentException("Can not accept year.!");
-    //     }
-    //     this.enrollYear = enrollYear;
-    // }
-    // public  void setSemester(String semester){
-    //     if(semester.isBlank()){
-    //         throw new IllegalArgumentException("semester data can not be blank.");
-    //     }
-    //     this.semester = semester;
-    // }
-    // @Override
-    // public String toString() {
-    //     return   student.getName() + ", Course: " + course.getCourseName() + ", Semester: " + semester + ", Year: " + (2026 - enrollYear) + ", Status: " + getStatus();
-    // }
+
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return student.getName() + " - " + course.getCourseName() + " - Status: " + getStatus();
+        return course.getCourseId() + " - " + course.getCourseName() + " - Status: " + getStatus();
     }
     public void dropCourse(){
         this.status = EnrollmentStatus.DROPPED;

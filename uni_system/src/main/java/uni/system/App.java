@@ -25,24 +25,24 @@ public class App
       university.addDepartment(TN);
       
       //student part
-      Student s1 = new Student("sora", "sora@123", "12345", "S001", CS, "SE",2);
-      Student s2 = new Student("sori", "sori@123", "12345", "S002", CS, "SE",1);
-      Student s3 = new Student("sore", "sore@123", "12345", "S003", CS, "SE",3);
-      Student s4 = new Student("devit", "devit@123", "234", "S004", TN, "IT", 2);
-      Student s5 = new Student("saki", "saki@123", "12345", "S005", DB, "DB", 1);
+      Student s1 = new Student("sora", "sora@123.com", "12345", "S001", CS, "SE",2);
+      Student s2 = new Student("sori", "sori@123.com", "12345", "S002", CS, "SE",1);
+      Student s3 = new Student("sore", "sore@123.com", "12345", "S003", CS, "SE",3);
+      Student s4 = new Student("devit", "devit@123.com", "1234", "S004", TN, "IT", 2);
+      Student s5 = new Student("saki", "saki@123.com", "12345", "S005", DB, "DB", 1);
       university.addUser(s1);
       university.addUser(s2);
       university.addUser(s3);
       university.addUser(s4);
       university.addUser(s5);
       //Lecturer part
-      university.addUser( new Lecturer("somnang", "somnang@123", "123", DB, "L001", "DB"));
+      university.addUser( new Lecturer("somnang", "somnang@123.com", "123", DB, "L001", "DB"));
       university.addUser( new Lecturer("Sophea", "sophea.k@email.com", "pass456", CS, "L002", "Java"));
       university.addUser(new Lecturer("Rathana", "rathana.v@email.com", "secure789", CS, "L003", "Algorithms"));
       university.addUser(new Lecturer("Borey", "borey.s@email.com", "borey2026", TN, "L004", "Networking"));
       university.addUser( new Lecturer("Channary", "channary.m@email.com", "chan!321", CS, "L005", "Machine Learning"));
       //Admin part
-      university.addUser( new Admin( "admin", "admin@123", "admin", "A001"));
+      university.addUser( new Admin( "admin", "admin@email.com", "admin", "A001"));
 
 
        //course part
@@ -55,7 +55,6 @@ public class App
       courses.add(new Course("DS", "DATA STRUCTURE", 3, CS, 2));
 
       
-      // university.printAllUsers();
       Scanner scanner = new Scanner( System.in);
       int choice = 0;
       do { 
@@ -68,13 +67,17 @@ public class App
           System.out.println("Invalid input. Please enter a number.");
           scanner.nextLine();
           continue;
-        } catch ( NoSuchElementException e) {
+        } catch ( IllegalStateException e) {
+          System.out.println("Scanner is closed. Exiting the system.");
+        return;
+        }
+        catch ( NoSuchElementException e) {
             System.out.println("Thanks for using the system.");
-            scanner.close();
             return;
 
         }  // still figure out which exception that we need to catch
         
+        intruction(); // provide info for testing the system
         switch (choice) {
           case 1:
             String name = "";
@@ -90,12 +93,12 @@ public class App
             continue;
            } catch ( NoSuchElementException e) {
             System.out.println("Thanks for using the system.");
-            scanner.close();
+             return;
            }
             //Authentication part
             User currentUser = university.login(name, password);
             if ( currentUser != null){
-              System.out.println("Login successful! Welcome, " + currentUser.getName() + "!");
+
               // // show dashboard based on role
               // if ( currentUser.getRole() == Role.ADMIN){
               //   Admin admin = ( Admin ) currentUser;
@@ -107,7 +110,7 @@ public class App
                 if ( currentUser.getRole() == Role.STUDENT){
                 // show student dashboard
                 Student student = ( Student ) currentUser;
-                student.studentDashboard(student, courses);
+                student.dashboard(student, courses);
               }
             } else {
               System.out.println("Login failed! Invalid name or password.");
@@ -124,6 +127,12 @@ public class App
         
       } while ( choice != 2);
       scanner.close();
+    }
+    
+    public static void intruction() {
+      System.out.println("Name: sora, pass:12345");
+      System.out.println("Lecturer: sophea, pass: pass456");
+      System.out.println("Admin: admin, pass: admin");
     }
   }
 
