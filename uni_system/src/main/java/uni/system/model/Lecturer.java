@@ -1,8 +1,12 @@
 package uni.system.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Lecturer extends User {
+import uni.system.action.EnrollmentStudent;
+import uni.system.action.Gradeable;
+
+public class Lecturer extends User implements Gradeable {
 
     private Department department;
     private String lecturerId;
@@ -77,4 +81,31 @@ public class Lecturer extends User {
             System.out.println(" - " + course);
         }
     }
-}
+    public void viewCourseGrades(EnrollmentStudent enrollList){
+        System.out.println("Lecturer " + getName() + " courses: ");
+        for (Course c : assignedCourses) {
+            boolean hasStudents = false;
+            for (Enrollment e : enrollList.getList()) {
+                if (e.getCourse().getCourseId().equals(c.getCourseId())){
+                    hasStudents = true;
+            double grade = e.getStudent().getGrade(c);
+
+            if (grade >= 0) {
+                System.out.println("(" + c.getCourseId() + ") " + e.getStudent().getName() + " : " + grade);
+            } else {
+                System.out.println("(" + c.getCourseId() + ") " + e.getStudent().getName() + " : Not graded yet");
+            }
+        }
+    }
+        if (!hasStudents) System.out.println("  No students enrolled in this course.");
+    }       
+                
+    }
+
+    @Override
+    public void assignGrade(Student student, Course course, double grade) {
+        student.setGrade(course, grade); 
+        System.out.println("Lecturer " + getName() + " recorded: " + student.getName() + " | " + course.getCourseId() + " | " + grade);
+    }
+        
+    }

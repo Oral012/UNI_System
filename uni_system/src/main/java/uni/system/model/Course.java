@@ -6,6 +6,7 @@ public class Course {
     private double credit;
     private Department department;
     private int yearLevel;
+    private double grade;
     public Course (String courseId, String courseName, double credit, Department department, int yearLevel){
         setCourseId(courseId);
         setCourseName(courseName);
@@ -31,6 +32,9 @@ public class Course {
     public Department getDepartment() {
         return department;
     }
+    public double getGrade(){
+        return grade;
+    }
     public void setCourseId(String courseId) {
         if( courseId.isBlank()){
             throw new IllegalArgumentException("Id can not be empty!.");
@@ -49,9 +53,15 @@ public class Course {
         }
         this.credit = credit;
     }
+    public void setGrade(double grade) {
+        if( grade > 100 || grade <0){
+            throw new IllegalArgumentException("Grade out of range of 0 to 100.");
+        }
+        this.grade = grade;
+    }
 public String getCourseId() {
     return courseId;
-}
+}   
 
 @Override
 public String toString() {

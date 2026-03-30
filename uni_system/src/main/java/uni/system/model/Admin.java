@@ -1,8 +1,12 @@
 package uni.system.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Admin extends User  {
+import uni.system.action.Gradeable;
+
+
+public class Admin extends User implements Gradeable  {
     public Admin ( String name, String email, String password, String adminId){
         super(name, email, password, Role.ADMIN);
     }
@@ -39,6 +43,11 @@ public class Admin extends User  {
         for (Course c : coursesTaught) {
             System.out.println(c);
         }
+    }
+    @Override
+    public void assignGrade(Student student, Course course, double grade) {
+        student.setGrade(course, grade); 
+        System.out.println("Admin " + getName() + " recorded: " + student.getName() + " | " + course.getCourseId() + " | " + grade);
     }
     
 }

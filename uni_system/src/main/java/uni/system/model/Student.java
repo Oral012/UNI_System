@@ -1,5 +1,8 @@
 package uni.system.model;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import uni.system.model.Enrollment;
 
 public class  Student extends User {
@@ -7,9 +10,10 @@ public class  Student extends User {
     private String major;
     private String studentId;
     private int yearLevel;
+    private Map<String, Double> gradeBook = new HashMap<>();
     ArrayList<Enrollment> enrollment;
     public Student (String name, String email, String password, String studentId,  Department department, String major, int yearLevel){
-        super( name, email, password, Role.STUDENT);    //use constructor of Parent class ( User class)
+        super(name, email, password, Role.STUDENT);    //use constructor of Parent class ( User class)
         setDepartment(department);
         setMajor(major);
         setYearLevel(yearLevel);
@@ -113,7 +117,33 @@ public class  Student extends User {
             }
         }
     }
-    
-    
     }
+    double getGrade(Course course){
+        return gradeBook.get(course.getCourseId()) == null ? -1 : gradeBook.get(course.getCourseId());
+    }
+    void setGrade(Course course, double grade) {
+        if (grade < 0.0 || grade > 100.0) {
+            throw new IllegalArgumentException("Error: Grade must be between 0 and 100.");
+        }
+        gradeBook.put(course.getCourseId(), grade);
+    }
+    
+
+    public void viewGrade() {
+    if (gradeBook == null || gradeBook.isEmpty()) {
+        System.out.println("No grades assigned yet.");
+        return;
+    }
+    System.out.println(getName() +" Grades : ");
+    for (Map.Entry<String, Double> entry : gradeBook.entrySet()) {
+        if (entry.getKey() != null && entry.getValue() != null) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+    }
+}
+    
+    
+
+    
+    
 }
