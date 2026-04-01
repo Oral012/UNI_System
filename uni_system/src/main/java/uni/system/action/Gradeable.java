@@ -7,5 +7,4 @@ import uni.system.model.*;
 
 public interface Gradeable {
     void assignGrade(Student student, Course course, double grade);
-    
 }
