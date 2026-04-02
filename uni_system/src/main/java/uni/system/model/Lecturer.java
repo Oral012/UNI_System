@@ -5,9 +5,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import uni.system.action.EnrollmentStudent;
+import uni.system.action.CourseAssign;
 
-public class Lecturer extends User {
+public class Lecturer extends User implements CourseAssign {
     private Department department;
     private String lecturerId;
     private String specialization;
@@ -57,32 +57,6 @@ public class Lecturer extends User {
         if (specialization == null || specialization.isBlank())
             throw new IllegalArgumentException("Specialization must not be blank.");
         this.specialization = specialization;
-    }
-
-    // For Admin use only
-    public void addAssignedCourse(Course course) {
-        if (course == null)
-            throw new IllegalArgumentException("Course cannot be null.");
-        for (Course c : assignedCourses) {
-            if (c.getCourseId().equals(course.getCourseId()))
-                throw new IllegalArgumentException("Course already assigned: " + course.getCourseId());
-        }
-        assignedCourses.add(course);
-    }
-
-    public void removeAssignedCourse(String courseId) {
-        if (courseId == null || courseId.isBlank())
-            throw new IllegalArgumentException("Course ID must not be blank.");
-        Course target = null;
-        for (Course c : assignedCourses) {
-            if (c.getCourseId().equals(courseId)) {
-                target = c;
-                break;
-            }
-        }
-        if (target == null)
-            throw new IllegalArgumentException("Course not found: " + courseId);
-        assignedCourses.remove(target);
     }
 
     // View assigned courses
@@ -258,5 +232,31 @@ public class Lecturer extends User {
     public String toString() {
         return "Lecturer[" + lecturerId + "] " + getName() + " | Department: "
                 + department.getDepartmentCode() + " | Specialization: " + specialization;
+    }
+        // For Admin use only
+    @Override
+    public void assignCourse(Course course) {
+        if (course == null)
+            throw new IllegalArgumentException("Course cannot be null.");
+        for (Course c : assignedCourses) {
+            if (c.getCourseId().equals(course.getCourseId()))
+                throw new IllegalArgumentException("Course already assigned: " + course.getCourseId());
+        }
+        assignedCourses.add(course);
+    }
+
+    public void removeAssignedCourse(String courseId) {
+        if (courseId == null || courseId.isBlank())
+            throw new IllegalArgumentException("Course ID must not be blank.");
+        Course target = null;
+        for (Course c : assignedCourses) {
+            if (c.getCourseId().equals(courseId)) {
+                target = c;
+                break;
+            }
+        }
+        if (target == null)
+            throw new IllegalArgumentException("Course not found: " + courseId);
+        assignedCourses.remove(target);
     }
 }

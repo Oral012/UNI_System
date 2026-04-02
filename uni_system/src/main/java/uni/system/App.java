@@ -6,6 +6,7 @@ import uni.system.model.Admin;
 import uni.system.model.Course;
 import uni.system.model.Department;
 import uni.system.model.Lecturer;
+import uni.system.model.Manager;
 import uni.system.model.Role;
 import uni.system.model.Student;
 import uni.system.model.University;
@@ -45,6 +46,7 @@ public class App
       university.addUser( new Lecturer("Channary", "channary.m@email.com", "chan!321", CS, "L005", "Machine Learning"));
       //Admin part
       university.addUser( new Admin( "admin", "admin@email.com", "admin", "A001"));
+      university.addUser( new Manager( "kim", "kim@gmail.com", "12345",  "M001" ));
 
         // assign couurse to lectuer
         //course part
@@ -56,7 +58,7 @@ public class App
         courses.add(new Course("DB", "DATABASE", 3, DB, 1));
         courses.add(new Course("DS", "DATA STRUCTURE", 3, CS, 2));
         
-        l1.addAssignedCourse(courses.get(0));
+        l1.assignCourse(courses.get(0));
       
       Scanner scanner = new Scanner( System.in);
       int choice = 0;
@@ -100,22 +102,27 @@ public class App
            }
             //Authentication part
             User currentUser = university.login(name, password);
-            if ( currentUser != null){
+            if ( currentUser != null) {
 
-              // // show dashboard based on role
-              // if ( currentUser.getRole() == Role.ADMIN){
-              //   Admin admin = ( Admin ) currentUser;
-              //   adminDashboard(admin);
-               if ( currentUser.getRole() == Role.LECTURER){
+              // show dashboard based on role
+              if ( currentUser.getRole() == Role.ADMIN) {
+                Admin admin = ( Admin ) currentUser;
+                admin.adminDashboard(university);
+              } else if ( currentUser.getRole() == Role.LECTURER) {
                 // show lecturer dashboard
                 Lecturer lecturer = ( Lecturer ) currentUser;
                 lecturer.dashboard(lecturer, scanner);
-              } else 
-                if ( currentUser.getRole() == Role.STUDENT){
+              } else if ( currentUser.getRole() == Role.STUDENT) {
                 // show student dashboard
                 Student student = ( Student ) currentUser;
                 student.dashboard(student, courses);
+              } else if ( currentUser.getRole() == Role.MANAGER) {
+                Manager manager = ( Manager ) currentUser;
+                manager.dashboard(university, courses);
+              } else {
+                System.out.println("Unknown role. Access denied.");
               }
+
             } else {
               System.out.println("Login failed! Invalid name or password.");
             }
@@ -135,6 +142,7 @@ public class App
     public static void intruction() {
       System.out.println("Name: sora, pass:12345");
       System.out.println("Lecturer: sopheara, pass: pass456");
+      System.out.println("Manager: kim, pass:12345");
       System.out.println("Admin: admin, pass: admin");
     }
   }
