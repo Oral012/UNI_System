@@ -4,45 +4,37 @@ package uni.system.model;
 // import uni.system.Course;
 
 public class Enrollment {
-    public enum EnrollmentStatus {
-        ENROLLED,
-        DROPPED,
-        COMPLETED
-    }
 
     private Student student;
     private Course course;
-    private EnrollmentStatus status;
+    private int score;
 
 
     public Enrollment (Student student, Course course){
         this.student = student;
         this.course = course;
-        this.status = EnrollmentStatus.ENROLLED;
+        this.score = -1;
+    }
+    public int getScore() {
+        return score;
     }
     public Student getStudent() {
         return student;
     }
-    public EnrollmentStatus getStatus() {
-        return status;
-    }
     public Course getCourse() {
         return course;
+    }
+    public void setScore( int score) {
+        if ( score > 100 || score < 0 ) {
+            throw new IllegalArgumentException("Score must be between 0 and 100.");
+        }
+        this.score = score;
     }
 
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return course.getCourseId() + " - " + course.getCourseName() + " - Status: " + getStatus();
-    }
-    public void dropCourse(){
-        this.status = EnrollmentStatus.DROPPED;
-    }
-    public void completedCourse(){
-        this.status = EnrollmentStatus.COMPLETED;
-    }
-    public boolean isActive(){
-        return status == EnrollmentStatus.ENROLLED;
+        return course.getCourseId() + " - " + course.getCourseName();
     }
 
 

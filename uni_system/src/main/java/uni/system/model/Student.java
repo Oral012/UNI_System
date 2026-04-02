@@ -68,6 +68,19 @@ public class Student extends User {
     public String getStudentId() {
         return studentId;
     }
+    public String grading(int score ) {
+        if ( score > 80) {
+            return "A";
+        } else if ( score > 70) {
+            return "B";
+        } else if ( score > 60) {
+            return "C";
+        } else if ( score > 50) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
     // methods
     @Override
     public void viewProfile() {
@@ -80,7 +93,18 @@ public class Student extends User {
                 + "Year Level = " + getYearLevel() + "\n");
         System.out.println("----------------------------------------------------------------------------------");
     }
-
+    public void viewGrade() {
+        System.out.println("-------------------- Grade Report --------------------");
+        if ( enrollment.isEmpty()) {
+            System.out.println("No enrolled courses.");
+        } else {
+            System.out.println("Course Name"+ super.space( 30,"Course Name") + "Score");
+            for ( Enrollment e : enrollment) {
+                System.out.println(e.getCourse().getCourseName() + super.space(30, e.getCourse().getCourseName()) +
+                        (e.getScore() == -1 ? "Not Graded" : e.getScore() + "-" + grading(e.getScore())));
+            }
+        }
+    }
     public void addEnrollment(String courseId, ArrayList<Course> courses) {
         if (enrollment.size() > 7) {
             System.out.println("You can not enroll more than 7 courses.");
@@ -108,9 +132,11 @@ public class Student extends User {
         }
         if (course == null) {
             System.out.println("Course not found or not available for your department and year level.");
+            return;
         }
         Enrollment e = new Enrollment(this, course);
         enrollment.add(e);
+        course.listOfEnroll.add(e);
     }
 
     public void removeEnrollment(String courseId) {
@@ -182,7 +208,8 @@ public class Student extends User {
             System.out.println("3. View Available Courses");
             System.out.println("4. Add New Enrollment");
             System.out.println("5. Drop Course");
-            System.out.println("6. Logout");
+            System.out.println("6. View Grade");
+            System.out.println("7. Logout");
             System.out.println("Enter your choice: ");
             int choice = 0;
             try {
@@ -211,8 +238,7 @@ public class Student extends User {
                         student.addEnrollment(courseId, courses);
                     } catch ( InputMismatchException e) {
                         System.out.println("Invalid input. Please try again.");
-                    }
-                    
+                    } 
                     
                     break;
                 case 5:
@@ -220,7 +246,10 @@ public class Student extends User {
                     String courseIdToDrop = scanner.next();
                     student.removeEnrollment(courseIdToDrop);
                     break;
-                case 6:
+                case 6: 
+                    student.viewGrade();
+                    break;
+                case 7:
                     System.out.println("Logging out...");
                     return;
                 default:
@@ -232,3 +261,4 @@ public class Student extends User {
     }
 
 }
+    
