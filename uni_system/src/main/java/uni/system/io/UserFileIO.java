@@ -4,8 +4,6 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import uni.system.model.*;
-import uni.system.model.Lecturer;
-import uni.system.model.Manager;
 
 
 public class UserFileIO {
@@ -92,6 +90,64 @@ public class UserFileIO {
             }
         } catch (IOException e) {
             System.out.println("Error reading user records: " + e.getMessage());
+        }
+    }
+    public static void deleteUserRecord(String userId) {
+
+        File inputFile = new File(FILE_PATH);
+        File tempFile = new File("users_temp.txt");
+
+        if (!inputFile.exists()) {
+            System.out.println("User records file not found.");
+            return;
+        }
+
+        boolean removed = false;
+
+        try (
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+        ) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+
+                if (line.startsWith("===") || line.startsWith("-") || line.contains("Timestamp")) {
+                    writer.write(line);
+                    writer.newLine();
+                    continue;
+                }
+
+                String[] parts = line.trim().split("\\s+");
+
+                if (parts.length >= 3) {
+
+                    String id = parts[2]; 
+
+                    if (id.equalsIgnoreCase(userId)) {
+                        removed = true;
+                        continue; 
+                    }
+                }
+
+                writer.write(line);
+                writer.newLine();
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error processing file: " + e.getMessage());
+            return;
+        }
+
+        if (inputFile.delete()) {
+            tempFile.renameTo(inputFile);
+        }
+
+        if (removed) {
+            System.out.println("User record removed from file.");
+        } else {
+            System.out.println("User ID not found in file.");
         }
     }
 }

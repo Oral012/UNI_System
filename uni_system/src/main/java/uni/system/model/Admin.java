@@ -3,7 +3,6 @@ package uni.system.model;
 import java.util.ArrayList;
 import java.util.Scanner;
 import uni.system.io.UserFileIO;
-import uni.system.model.*;
 public class Admin extends User {
     private String adminId;
 
@@ -42,8 +41,8 @@ public class Admin extends User {
             }
 
             switch (choice) {
-                case 1 -> addUser(university);
-                case 2 -> removeUser(university);
+                case 1 -> addUser(university, scanner);
+                case 2 -> removeUser(university, scanner);
                 case 3 -> viewAllUsers(university);
                 case 4 -> viewProfile();
                 case 5 -> UserFileIO.printAllRecords();
@@ -211,8 +210,7 @@ public class Admin extends User {
         }
     }
 
-    private void addUser(University university) {
-        Scanner scanner = new Scanner(System.in);
+    private void addUser(University university, Scanner scanner) {
         System.out.println("Select user type to add:");
         System.out.println("1. Student");
         System.out.println("2. Lecturer");
@@ -223,7 +221,7 @@ public class Admin extends User {
         try {
             choice = Integer.parseInt(scanner.nextLine().trim());
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a number.");
+            System.out.println("Invalid input.");
             return;
         }
 
@@ -235,8 +233,7 @@ public class Admin extends User {
         }
     }
 
-    private void removeUser(University university) {
-        Scanner scanner = new Scanner(System.in);
+    private void removeUser(University university, Scanner scanner) {
         System.out.println("Select user type to remove:");
         System.out.println("1. Student");
         System.out.println("2. Lecturer");
@@ -247,7 +244,7 @@ public class Admin extends User {
         try {
             choice = Integer.parseInt(scanner.nextLine().trim());
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a number.");
+            System.out.println("Invalid input.");
             return;
         }
 
@@ -262,24 +259,36 @@ public class Admin extends User {
     private void removeStudent(University university, Scanner scanner) {
         System.out.print("Enter Student ID to remove: ");
         Student student = findStudentById(university, scanner.nextLine());
-        if (student == null) { System.out.println("Student not found."); return; }
+        if (student == null) { 
+            System.out.println("Student not found."); 
+            return; 
+        }
         university.deleteUser(student);
+        UserFileIO.deleteUserRecord(student.getStudentId());
         System.out.println("Student '" + student.getName() + "' removed successfully.");
     }
 
     private void removeLecturer(University university, Scanner scanner) {
         System.out.print("Enter Lecturer ID to remove: ");
         Lecturer lecturer = findLecturerById(university, scanner.nextLine());
-        if (lecturer == null) { System.out.println("Lecturer not found."); return; }
+        if (lecturer == null) { 
+            System.out.println("Lecturer not found."); 
+            return; 
+        }
         university.deleteUser(lecturer);
+        UserFileIO.deleteUserRecord(lecturer.getLecturerId());
         System.out.println("Lecturer '" + lecturer.getName() + "' removed successfully.");
     }
 
     private void removeManager(University university, Scanner scanner) {
         System.out.print("Enter Manager ID to remove: ");
         Manager manager = findManagerById(university, scanner.nextLine());
-        if (manager == null) { System.out.println("Manager not found."); return; }
+        if (manager == null) { 
+            System.out.println("Manager not found."); 
+            return; 
+        }
         university.deleteUser(manager);
+        UserFileIO.deleteUserRecord(manager.getManagerId());
         System.out.println("Manager '" + manager.getName() + "' removed successfully.");
     }
 

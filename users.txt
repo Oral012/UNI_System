@@ -1,0 +1,5 @@
+=== University User Records ===
+Timestamp    Role            ID                   Name                           Email               
+----------------------------------------------------------------------------------------------------
+[2026-04-02 20:05:28]  MANAGER    2324            wkda[o               awdk[@
+[2026-04-02 20:06:00]  MANAGER    2345            feiogpj              fewiofj@

@@ -106,7 +106,7 @@ public class Student extends User {
         }
     }
     public void addEnrollment(String courseId, ArrayList<Course> courses) {
-        if (enrollment.size() > 7) {
+        if (enrollment.size() >= 7) {
             System.out.println("You can not enroll more than 7 courses.");
             return;
         }
@@ -157,6 +157,7 @@ public class Student extends User {
             throw new IllegalArgumentException("Not enrolled this course.");
         }
         enrollment.remove(e);
+        e.getCourse().listOfEnroll.remove(e);
         System.out.println( this.getName() + " dropped " + e.getCourse().getCourseName() + " successfully.");
     }
 
@@ -198,7 +199,7 @@ public class Student extends User {
 
     }
 
-    public void dashboard(Student student, ArrayList<Course> courses) {
+    public void dashboard(ArrayList<Course> courses) {
         // Accept input
         Scanner scanner = new Scanner(System.in);
         do {
@@ -211,31 +212,33 @@ public class Student extends User {
             System.out.println("6. View Grade");
             System.out.println("7. Logout");
             System.out.println("Enter your choice: ");
+            String choiceInput = scanner.nextLine();
             int choice = 0;
             try {
-                choice = scanner.nextInt();
-            } catch ( InputMismatchException e) {
-                System.out.println("Invalid input.");
-            } catch ( NoSuchElementException e) {
+                choice = Integer.parseInt(choiceInput);
+            } catch (NumberFormatException e) {
+                    System.out.println("Invalid choice. Must be a number 1-7.");
+                    continue;
+                } catch ( NoSuchElementException e) {
                 System.out.println("Thanks for using the system.");
                 scanner.close();
                 return;
             }
             switch (choice) {
                 case 1:
-                    student.viewProfile();
+                    viewProfile();
                     break;
                 case 2:
-                    student.viewEnrolledCourses();
+                    viewEnrolledCourses();
                     break;
                 case 3:
-                    student.viewAvailableCourses(courses);
+                    viewAvailableCourses(courses);
                     break;
                 case 4:
                     System.out.println("Enter course ID to enroll: ");
                     try {
-                        String courseId = scanner.next();
-                        student.addEnrollment(courseId, courses);
+                        String courseId = scanner.nextLine().trim();
+                        addEnrollment(courseId, courses);
                     } catch ( InputMismatchException e) {
                         System.out.println("Invalid input. Please try again.");
                     } 
@@ -243,11 +246,11 @@ public class Student extends User {
                     break;
                 case 5:
                     System.out.println("Enter course ID to drop: ");
-                    String courseIdToDrop = scanner.next();
-                    student.removeEnrollment(courseIdToDrop);
+                    String courseIdToDrop = scanner.nextLine().trim();
+                    removeEnrollment(courseIdToDrop);
                     break;
                 case 6: 
-                    student.viewGrade();
+                    viewGrade();
                     break;
                 case 7:
                     System.out.println("Logging out...");
