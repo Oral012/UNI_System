@@ -104,18 +104,18 @@ public class App
             if ( currentUser != null) {
 
               // show dashboard based on role
-              if ( currentUser.getRole() == Role.ADMIN) {
+              if ( currentUser instanceof Admin) {
                 Admin admin = ( Admin ) currentUser;
                 admin.adminDashboard(university);
-              } else if ( currentUser.getRole() == Role.LECTURER) {
+              } else if ( currentUser instanceof Lecturer) {
                 // show lecturer dashboard
                 Lecturer lecturer = ( Lecturer ) currentUser;
                 lecturer.dashboard(lecturer, scanner);
-              } else if ( currentUser.getRole() == Role.STUDENT) {
+              } else if ( currentUser instanceof Student) {
                 // show student dashboard
                 Student student = ( Student ) currentUser;
                 student.dashboard(student, courses);
-              } else if ( currentUser.getRole() == Role.MANAGER) {
+              } else if ( currentUser instanceof Manager) {
                 Manager manager = ( Manager ) currentUser;
                 manager.dashboard(university, courses);
               } else {
