@@ -107,7 +107,7 @@ public class Lecturer extends User implements CourseAssign {
             }
 
         }
-        return new Enrollment(null, null);
+        return null;
 
     }
 

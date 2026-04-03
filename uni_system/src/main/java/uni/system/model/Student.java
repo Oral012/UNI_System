@@ -157,6 +157,7 @@ public class Student extends User {
             throw new IllegalArgumentException("Not enrolled this course.");
         }
         enrollment.remove(e);
+        e.getCourse().listOfEnroll.remove(e);
         System.out.println( this.getName() + " dropped " + e.getCourse().getCourseName() + " successfully.");
     }
 
