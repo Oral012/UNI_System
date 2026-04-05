@@ -1,0 +1,3 @@
+2026-04-05 13:16:32|MANAGER|001|josh|josh@gmail.com
+2026-04-05 13:18:12|LECTURER|001|gertrude|gertrude@gmail.com|DB|Database
+2026-04-05 13:22:41|STUDENT|001|hubert|hubert@gmail.com|CS|Software|1

@@ -5,7 +5,9 @@ public  abstract class User  {
     private String email;
     private String password;
     private Role role;
-    public User (String name, String email, String password, Role role){
+    
+    public User (String name, String email,
+         String password, Role role){
         
         setName(name);
         setEmail(email);
@@ -32,10 +34,11 @@ public  abstract class User  {
             throw new IllegalArgumentException("Email must not be blank or missing @.");
         }
         if ( !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]{2,}$")){
-            throw new IllegalArgumentException("Email is invalid.");
+            throw new IllegalArgumentException("Email is invalid. (_____@__.__)");
         }
         this.email = email;
     }
+    
     public void setPassword(String password){
         if( password.isBlank()){
             throw new IllegalArgumentException("Password must not be blank.");
@@ -56,7 +59,14 @@ public  abstract class User  {
 
 
     public  abstract void viewProfile();
+    public String space( int max, String str) {
+        String space = "";
+        for ( int i = 0; i< max - str.length() ; i++) {
+            space += " ";
+        }
+        return space;
 
+    }
     
     
 }

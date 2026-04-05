@@ -1,17 +1,22 @@
 package uni.system.model;
 
+import java.util.ArrayList;
+
 public class Course {
     private String courseId;
     private String courseName;
     private double credit;
     private Department department;
     private int yearLevel;
+    ArrayList<Enrollment> listOfEnroll;
     public Course (String courseId, String courseName, double credit, Department department, int yearLevel){
         setCourseId(courseId);
         setCourseName(courseName);
         setCredit(credit);
-        setDepartment(department);
+        setDepartment(department); 
         setYearLevel(yearLevel);
+        listOfEnroll = new ArrayList<>();
+       
     }
     public void setDepartment(Department department) {
         if(department == null){
@@ -51,7 +56,7 @@ public class Course {
     }
 public String getCourseId() {
     return courseId;
-}
+}   
 
 @Override
 public String toString() {

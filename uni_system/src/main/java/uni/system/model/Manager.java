@@ -1,11 +1,12 @@
 package uni.system.model;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Manager extends User {
+public class Manager extends User{
     private String managerId;
-
+    Scanner scanner = new Scanner(System.in);
     public Manager(String name, String email, String password, String managerId) {
         super(name, email, password, Role.MANAGER);
         setManagerId(managerId);
@@ -16,7 +17,7 @@ public class Manager extends User {
     }
 
     public void setManagerId(String managerId) {
-        if (managerId == null || managerId.isBlank()) {
+        if (managerId.isBlank()) {
             throw new IllegalArgumentException();
         }
         this.managerId = managerId;
@@ -31,17 +32,20 @@ public class Manager extends User {
     }
 
     public void dashboard(University university, ArrayList<Course> courses) {
-        Scanner scanner = new Scanner(System.in);
+        
         int choice ;
         do {
             printMenu();
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
+            scanner.nextLine();
           
             switch (choice) {
+
                 case 1:
                     viewAllStudents(university);
                     break;
+
                 case 2:
                     viewAllLecturers(university);
                     break;
@@ -55,7 +59,7 @@ public class Manager extends User {
                     viewAllCourses(courses);
                     break;
                 case 6:
-                    assignLecturerToCourse(university, courses);
+                    addCourseToLecturer(university, courses);
                     break;
                 case 7:
                     printCourseEnrollmentReport(university, courses);
@@ -71,27 +75,24 @@ public class Manager extends User {
     }
 
     private void printMenu() {
-        System.out.println("--- STUDENT MANAGEMENT ---");
+        System.out.println("------------------- Manager Dashboard -------------------");
         System.out.println("1. View All Students");
-        System.out.println("--- LECTURER MANAGEMENT ---");
         System.out.println("2. View All Lecturers");
-        System.out.println("--- COURSE MANAGEMENT ---");
         System.out.println("3. Create Course");
         System.out.println("4. Delete Course");
         System.out.println("5. View All Courses");
-        System.out.println("6. Assign Lecturer to Course");
-        System.out.println("--- REPORTS ---");
+        System.out.println("6. Add Course To Lecturer");
         System.out.println("7. Course Enrollment Report");
         System.out.println("0. Logout");
     }
     private void printDepartmentCode(University university) {
-                    String deptCodes = "";
+            String deptCodes = "";
             for( Department dept : university.getDepartments()){
                 deptCodes += dept.getDepartmentCode() + " ";
             }
              System.out.print("Department code (" + deptCodes + ")");
-        }
-
+    }
+    
 
     private void viewAllStudents(University university) {
         ArrayList<Student> students = getAllStudents(university);
@@ -99,13 +100,22 @@ public class Manager extends User {
             System.out.println("No students found.");
             return;
         }
+        System.out.println("Student ID" + super.space(10, managerId) + "Name" + super.space(9, managerId) + "Department" + super.space(10, managerId) + "Year:");
         for (Student student : students) {
-            System.out.println(student.getStudentId() + "  " + student.getName() + "  "
-                    + student.getDepartment().getDepartmentCode() + "  Year " + student.getYearLevel());
+            System.out.println(student.getStudentId() + super.space(16, managerId) + student.getName() + super.space(10, managerId)
+                    + student.getDepartment().getDepartmentCode() +super.space(18, managerId)+ "Year: " + student.getYearLevel());
         }
     }
-
-
+       
+    private ArrayList<Lecturer> getAllLecturers(University university) {
+        ArrayList<Lecturer> lecturers = new ArrayList<>();
+        for (User user : university.getUsers()) {
+            if (user instanceof Lecturer) {
+                lecturers.add((Lecturer) user);
+            }
+        }
+        return lecturers;
+    }
 
     private void viewAllLecturers(University university) {
         ArrayList<Lecturer> lecturers = getAllLecturers(university);
@@ -119,22 +129,43 @@ public class Manager extends User {
         }
     }
 
+    private Course findCourseById(ArrayList<Course> courses, String courseId) {
+        for (Course course : courses) {
+            if (course.getCourseId().equals(courseId)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    private Department findDepartmentByCode(University university, String code) {
+        for (Department department : university.getDepartments()) {
+            if (department.getDepartmentCode().equals(code)) {
+                return department;
+            }
+        }
+        return null;
+    }
+
     private void createCourse(University university, ArrayList<Course> courses) {
-        Scanner scanner = new Scanner(System.in);
-       
+        try {
             System.out.print("Course ID: ");
-            String courseId = scanner.next();
+            String courseId = scanner.nextLine();
             if (findCourseById(courses, courseId) != null) {
                 System.out.println("Course ID already exists.");
                 return;
             }
-            scanner.nextLine();
             System.out.print("Course name: ");
             String courseName = scanner.nextLine();
             System.out.print("Credits: ");
             double credit = scanner.nextDouble();
+            scanner.nextLine();
+            if (credit <= 0) {
+                throw new IllegalArgumentException("Credits must be greater than 0.");
+         
+            }
             printDepartmentCode(university);
-            String deptCode = scanner.next();
+            String deptCode = scanner.nextLine();
             Department department = findDepartmentByCode(university, deptCode);
             if (department == null) {
                 System.out.println("Department not found.");
@@ -142,17 +173,28 @@ public class Manager extends User {
             }
             System.out.print("Year level (1-4): ");
             int yearLevel = scanner.nextInt();
+            scanner.nextLine();
+            if (yearLevel < 1 || yearLevel > 4) {
+                throw new IllegalArgumentException("Year level must be between 1 and 4.");
+                
+            }
 
             Course course = new Course(courseId, courseName, credit, department, yearLevel);
             courses.add(course);
+            System.out.println("Course created successfully.");
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input type. Please enter numbers for credits and year level.");
+            scanner.nextLine();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Failed to create course: " + e.getMessage());
+        }
     }
 
     private void deleteCourse(ArrayList<Course> courses) {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter course ID to delete: ");
-        String courseId = scanner.next();
+        String courseId = scanner.nextLine();
         for (int i = 0; i < courses.size(); i++) {
-            if (courses.get(i).getCourseId().equalsIgnoreCase(courseId)) {
+            if (courses.get(i).getCourseId().equals(courseId)) {
                 courses.remove(i);
                 return;
             }
@@ -160,10 +202,22 @@ public class Manager extends User {
         System.out.println("Course not found.");
     }
 
-    private void assignLecturerToCourse(University university, ArrayList<Course> courses) {
-        Scanner scanner = new Scanner(System.in);
+
+
+    private Lecturer findLecturerById(University university, String lecturerId) {
+        for (User user : university.getUsers()) {
+            if (user instanceof Lecturer) {
+                Lecturer lecturer = (Lecturer) user;
+                if (lecturer.getLecturerId().equalsIgnoreCase(lecturerId)) {
+                    return lecturer;
+                }
+            }
+        }
+        return null;
+    }
+    private void addCourseToLecturer(University university, ArrayList<Course> courses) {
         System.out.print("Enter lecturer ID: ");
-        String lecturerId = scanner.next();
+        String lecturerId = scanner.nextLine();
         Lecturer lecturer = findLecturerById(university, lecturerId);
         if (lecturer == null) {
             System.out.println("Lecturer not found.");
@@ -171,7 +225,7 @@ public class Manager extends User {
         }
 
         System.out.print("Enter course ID: ");
-        String courseId = scanner.next();
+        String courseId = scanner.nextLine();
         Course course = findCourseById(courses, courseId);
         if (course == null) {
             System.out.println("Course not found.");
@@ -185,9 +239,24 @@ public class Manager extends User {
             }
         }
 
-        lecturer.getAssignedCourses().add(course);
+        try {lecturer.assignCourse(course);}
+        catch (IllegalArgumentException e) {
+            System.out.println("Failed to assign course: " + e.getMessage());
+        }
+        
     }
 
+
+       
+    private ArrayList<Student> getAllStudents(University university) {
+        ArrayList<Student> students = new ArrayList<>();
+        for (User user : university.getUsers()) {
+            if (user instanceof Student) {
+                students.add((Student) user);
+            }
+        }
+        return students;
+    }
     private void printCourseEnrollmentReport(University university, ArrayList<Course> courses) {
         System.out.println("===== Course Enrollment Report =====");
         if (courses.isEmpty()) {
@@ -202,7 +271,7 @@ public class Manager extends User {
                 for (Enrollment enrollment : student.enrollment) {
                     if (enrollment.getCourse() != null
                             && enrollment.getCourse().getCourseId().equals(course.getCourseId())
-                            && enrollment.isActive()) {
+                            ) {
                         count++;
                     }
                 }
@@ -222,53 +291,4 @@ public class Manager extends User {
         }
     }
 
-    private Department findDepartmentByCode(University university, String code) {
-        for (Department department : university.getDepartments()) {
-            if (department.getDepartmentCode().equalsIgnoreCase(code)) {
-                return department;
-            }
-        }
-        return null;
-    }
-
-    private Lecturer findLecturerById(University university, String lecturerId) {
-        for (User user : university.getUsers()) {
-            if (user instanceof Lecturer) {
-                Lecturer lecturer = (Lecturer) user;
-                if (lecturer.getLecturerId().equalsIgnoreCase(lecturerId)) {
-                    return lecturer;
-                }
-            }
-        }
-        return null;
-    }
-
-    private Course findCourseById(ArrayList<Course> courses, String courseId) {
-        for (Course course : courses) {
-            if (course.getCourseId().equalsIgnoreCase(courseId)) {
-                return course;
-            }
-        }
-        return null;
-    }
-
-    private ArrayList<Student> getAllStudents(University university) {
-        ArrayList<Student> students = new ArrayList<>();
-        for (User user : university.getUsers()) {
-            if (user instanceof Student) {
-                students.add((Student) user);
-            }
-        }
-        return students;
-    }
-
-    private ArrayList<Lecturer> getAllLecturers(University university) {
-        ArrayList<Lecturer> lecturers = new ArrayList<>();
-        for (User user : university.getUsers()) {
-            if (user instanceof Lecturer) {
-                lecturers.add((Lecturer) user);
-            }
-        }
-        return lecturers;
-    }
 }
