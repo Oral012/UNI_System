@@ -24,7 +24,7 @@ public  abstract class User  {
             throw new IllegalArgumentException("Name must not be blank.");
         }
         if ( !name.matches("^[a-zA-Z]{3,15}$")) {
-            System.out.println("Name must be 3-15 character and only letter");
+            throw new IllegalArgumentException("Name must be 3-15 character and only letter");
         }
         
         this.name = name;
@@ -34,7 +34,7 @@ public  abstract class User  {
             throw new IllegalArgumentException("Email must not be blank or missing @.");
         }
         if ( !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]{2,}$")){
-            System.out.println("Email is invalid.");
+            throw new IllegalArgumentException("Email is invalid. (_____@__.__)");
         }
         this.email = email;
     }

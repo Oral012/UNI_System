@@ -8,13 +8,12 @@ public class Course {
     private double credit;
     private Department department;
     private int yearLevel;
-    private double grade;
     ArrayList<Enrollment> listOfEnroll;
     public Course (String courseId, String courseName, double credit, Department department, int yearLevel){
         setCourseId(courseId);
         setCourseName(courseName);
         setCredit(credit);
-        setDepartment(department);
+        setDepartment(department); 
         setYearLevel(yearLevel);
         listOfEnroll = new ArrayList<>();
        
@@ -37,9 +36,6 @@ public class Course {
     public Department getDepartment() {
         return department;
     }
-    public double getGrade(){
-        return grade;
-    }
     public void setCourseId(String courseId) {
         if( courseId.isBlank()){
             throw new IllegalArgumentException("Id can not be empty!.");
@@ -57,12 +53,6 @@ public class Course {
             throw new IllegalArgumentException("Credit out of range of 0.0 to 5.0.");
         }
         this.credit = credit;
-    }
-    public void setGrade(double grade) {
-        if( grade > 100 || grade <0){
-            throw new IllegalArgumentException("Grade out of range of 0 to 100.");
-        }
-        this.grade = grade;
     }
 public String getCourseId() {
     return courseId;

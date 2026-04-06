@@ -156,7 +156,7 @@ public class Lecturer extends User implements CourseAssign {
         }
     }
 
-    public void dashboard(Lecturer lecturer, Scanner scanner) {
+    public void dashboard(Scanner scanner) {
         boolean exit = false;
         try {
             while (!exit) {
@@ -180,13 +180,13 @@ public class Lecturer extends User implements CourseAssign {
 
                 switch (choice) {
                     case 1:
-                        lecturer.viewProfile();
+                        viewProfile();
                         break;
                     case 2:
-                        lecturer.viewCourses();
+                        viewCourses();
                         break;
                     case 3:
-                        lecturer.assignGrade( scanner);
+                        assignGrade( scanner);
                         break;
                     case 4:
                         try {
@@ -194,7 +194,7 @@ public class Lecturer extends User implements CourseAssign {
                             String courseId;
                             System.out.println("Enter course ID to view enrolled students: ");
                             courseId = scanner.nextLine();
-                            lecturer.viewStudentInCourse(courseId);
+                            viewStudentInCourse(courseId);
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
@@ -233,7 +233,7 @@ public class Lecturer extends User implements CourseAssign {
         return "Lecturer[" + lecturerId + "] " + getName() + " | Department: "
                 + department.getDepartmentCode() + " | Specialization: " + specialization;
     }
-        // For Admin use only
+        // For Manager use only
     @Override
     public void assignCourse(Course course) {
         if (course == null)

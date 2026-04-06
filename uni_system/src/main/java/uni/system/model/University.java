@@ -39,6 +39,11 @@ public class University {
         departments.add(department);
     }
     public void addUser( User user){
+        for (User u : getUsers()) {
+            if (u.getEmail().equals(user.getEmail())){
+                throw new IllegalArgumentException("Email already exists. Try another email");
+            }
+        }
         users.add(user);
     }
     public void deleteUser(User user){
