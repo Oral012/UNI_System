@@ -138,6 +138,7 @@ public class App
         //course part
         
         
+        
         university.addCourse(new Course("CA", "COMPUTER ARCHITECTURE", 3, CS, 2)); 
         university.addCourse(new Course("ITE", "INTERNET TECHNOLOGY", 3, TN, 1) );
         university.addCourse( new Course("SE", "SOFTWARE ENGINEERING", 3, CS, 3));
