@@ -6,7 +6,6 @@ import uni.system.io.UserFileIO;
 import uni.system.model.*;
 public class Admin extends User {
     private String adminId;
-
     public Admin(String name, String email, String password, String adminId) {
         super(name, email, password, Role.ADMIN);
         if (adminId == null || adminId.isBlank()) {
@@ -14,6 +13,7 @@ public class Admin extends User {
         }
         this.adminId = adminId;
     }
+    
 
     private String getAdminId() {
         return adminId;

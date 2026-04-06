@@ -7,6 +7,7 @@ public class University {
     private String name;
     private String address;
     ArrayList<Department> departments;
+    ArrayList<Course> courses;
     List<User> users;
     public University( String name, String address){
         if (name.isBlank()) throw new IllegalArgumentException("University name must not be blank.");
@@ -14,6 +15,7 @@ public class University {
         this.name = name;
         this.address = address;
         departments = new ArrayList<>();
+        courses = new ArrayList<>();
         users = new ArrayList<>();
     }
     //getter methods
@@ -28,6 +30,9 @@ public class University {
     }
     public List<User> getUsers() {
         return users;
+    }
+    public ArrayList<Course> getCourses() {
+        return courses;
     }
     //methods
     public void addDepartment(Department department){
@@ -59,5 +64,11 @@ public class University {
             System.out.println("Invalid name or password. Pls try again.");
             return null;
         } 
+        public void addCourse( Course course) {
+            courses.add(course);
+        }
+        public void deleteCourse( Course course) {
+            courses.remove( course);
+        }
 }
     

@@ -31,7 +31,7 @@ public class Manager extends User{
                 + "Manager ID = " + getManagerId());
     }
 
-    public void dashboard(University university, ArrayList<Course> courses) {
+    public void dashboard(University university) {
         
         int choice ;
         do {
@@ -49,19 +49,19 @@ public class Manager extends User{
                     viewAllLecturers(university);
                     break;
                 case 3:
-                    createCourse(university, courses);
+                    createCourse(university, university.getCourses());
                     break;
                 case 4:
-                    deleteCourse(courses);
+                    deleteCourse(university.getCourses());
                     break;
                 case 5:
-                    viewAllCourses(courses);
+                    viewAllCourses(university.getCourses());
                     break;
                 case 6:
-                    addCourseToLecturer(university, courses);
+                    addCourseToLecturer(university, university.getCourses());
                     break;
                 case 7:
-                    printCourseEnrollmentReport(university, courses);
+                    printCourseEnrollmentReport(university, university.getCourses());
                     break;
                 case 0:
                     System.out.println("Logging out...");
