@@ -38,6 +38,7 @@ public class Manager extends User{
             printMenu();
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
+            scanner.nextLine();
           
             switch (choice) {
 
@@ -158,6 +159,7 @@ public class Manager extends User{
             String courseName = scanner.nextLine();
             System.out.print("Credits: ");
             double credit = scanner.nextDouble();
+            scanner.nextLine();
             if (credit <= 0) {
                 throw new IllegalArgumentException("Credits must be greater than 0.");
          
@@ -171,6 +173,7 @@ public class Manager extends User{
             }
             System.out.print("Year level (1-4): ");
             int yearLevel = scanner.nextInt();
+            scanner.nextLine();
             if (yearLevel < 1 || yearLevel > 4) {
                 throw new IllegalArgumentException("Year level must be between 1 and 4.");
                 
@@ -192,7 +195,12 @@ public class Manager extends User{
         String courseId = scanner.nextLine();
         for (int i = 0; i < courses.size(); i++) {
             if (courses.get(i).getCourseId().equals(courseId)) {
+                if ( !courses.get(i).listOfEnroll.isEmpty()){
+                    System.out.println("Cannot delete course. There are students enrolled in this course."); 
+                    return;
+                } 
                 courses.remove(i);
+
                 return;
             }
         }
@@ -236,7 +244,10 @@ public class Manager extends User{
             }
         }
 
-        lecturer.getAssignedCourses().add(course);
+        try {lecturer.assignCourse(course);}
+        catch (IllegalArgumentException e) {
+            System.out.println("Failed to assign course: " + e.getMessage());
+        }
         
     }
 
