@@ -130,7 +130,7 @@ public class Lecturer extends User implements CourseAssign {
                     System.out.println("Cannot find student enrollment for given student and course Id.");
                     continue;
                 }
-                System.out.println("Enter grade ( 0-100):");
+                System.out.println("Enter grade (0-100):");
                 try {
                     int grade = Integer.parseInt(scanner.nextLine());
                     if (grade < 0 || grade > 100) {
@@ -160,7 +160,7 @@ public class Lecturer extends User implements CourseAssign {
         boolean exit = false;
         try {
             while (!exit) {
-                System.out.println("\n===== MENU =====");
+                System.out.println("\n===== LECTURER MENU =====");
                 System.out.println("1. View Profile");
                 System.out.println("2. View My Courses");
                 System.out.println("3. Assign Grade");

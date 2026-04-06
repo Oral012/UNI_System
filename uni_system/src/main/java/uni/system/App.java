@@ -37,8 +37,8 @@ public class App
       university.addUser(s4);
       university.addUser(s5);
       //Lecturer part
-      Lecturer l1 = new Lecturer("Sopheara", "sophea.k@email.com", "pass456", CS, "L002", "Java");
-        university.addUser(l1);
+      Lecturer l1 = new Lecturer("Sopheara", "sopheara.k@email.com", "pass456", CS, "L002", "Java");
+      university.addUser(l1);
       university.addUser( new Lecturer("somnang", "somnang@123.com", "123", DB, "L001", "DB"));
       university.addUser( new Lecturer("Sophea", "sophea.k@email.com", "pass456", CS, "L002", "Java"));
       university.addUser(new Lecturer("Rathana", "rathana.v@email.com", "secure789", CS, "L003", "Algorithms"));
@@ -48,7 +48,7 @@ public class App
       university.addUser( new Admin( "admin", "admin@email.com", "admin", "A001"));
       university.addUser( new Manager( "kim", "kim@gmail.com", "12345",  "M001" ));
 
-        // assign couurse to lectuer
+        // assign course to lectuer
         //course part
         ArrayList<Course> courses = new ArrayList<>();
         courses.add(new Course("CA", "COMPUTER ARCHITECTURE", 3, CS, 2)); 
@@ -59,6 +59,7 @@ public class App
         courses.add(new Course("DS", "DATA STRUCTURE", 3, CS, 2));
         
         l1.assignCourse(courses.get(0));
+        l1.assignCourse(courses.get(2));
       
       Scanner scanner = new Scanner( System.in);
       int choice = 0;
