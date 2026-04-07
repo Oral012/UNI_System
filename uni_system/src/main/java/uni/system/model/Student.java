@@ -68,7 +68,7 @@ public class Student extends User {
     public String getStudentId() {
         return studentId;
     }
-    public String grading(int score ) {
+    private String grading(int score ) {
         if ( score > 80) {
             return "A";
         } else if ( score > 70) {

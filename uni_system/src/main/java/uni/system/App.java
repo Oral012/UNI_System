@@ -14,10 +14,10 @@ public class App
     {
       
 
-      University CADT = new University("CADT", "Plov90");
+      University CADT = new University("CADT", "Phom Penh");
       ArrayList<Course> courses = new ArrayList<>(); //not sure where to put
       insertData(CADT, courses);
-      // UserFileIO.loadUsers(CADT);
+      UserFileIO.loadUsers(CADT);
       dashboard(CADT, courses);
 
 
@@ -114,24 +114,24 @@ public class App
       university.addDepartment(TN);
       
      //student part
-      university.addUser(new Student("sora", "sora@123.com", "12345", "S001", CS, "SE",2));
-      university.addUser(new Student("sori", "sori@123.com", "12345", "S002", CS, "SE",1));
-      university.addUser(new Student("sore", "sore@123.com", "12345", "S003", CS, "SE",3));
-      university.addUser(new Student("devit", "devit@123.com", "1234", "S004", TN, "IT", 2));
-      university.addUser(new Student("saki", "saki@123.com", "12345", "S005", DB, "DB", 1));
-      //Lecturer part
-      university.addUser( new Lecturer("somnang", "somnang@123.com", "123", DB, "L001", "DB"));
-      university.addUser( new Lecturer("Sophea", "sophea.k@email.com", "pass456", CS, "L002", "Java"));
-      university.addUser(new Lecturer("Rathana", "rathana.v@email.com", "secure789", CS, "L003", "Algorithms"));
-      university.addUser(new Lecturer("Borey", "borey.s@email.com", "borey2026", TN, "L004", "Networking"));
-      university.addUser( new Lecturer("Channary", "channary.m@email.com", "chan!321", CS, "L005", "Machine Learning"));
+      // university.addUser(new Student("sora", "sora@123.com", "12345", "S001", CS, "SE",2));
+      // university.addUser(new Student("sori", "sori@123.com", "12345", "S002", CS, "SE",1));
+      // university.addUser(new Student("sore", "sore@123.com", "12345", "S003", CS, "SE",3));
+      // university.addUser(new Student("devit", "devit@123.com", "1234", "S004", TN, "IT", 2));
+      // university.addUser(new Student("saki", "saki@123.com", "12345", "S005", DB, "DB", 1));
+      // //Lecturer part
+      // university.addUser( new Lecturer("somnang", "somnang@123.com", "12345", DB, "L001", "DB"));
+      // university.addUser( new Lecturer("Sophea", "sophea.k@email.com", "pass456", CS, "L002", "Java"));
+      // university.addUser(new Lecturer("Rathana", "rathana.v@email.com", "secure789", CS, "L003", "Algorithms"));
+      // university.addUser(new Lecturer("Borey", "borey.s@email.com", "borey2026", TN, "L004", "Networking"));
+      // university.addUser( new Lecturer("Channary", "channary.m@email.com", "chan!321", CS, "L005", "Machine Learning"));
       //Admin part
       university.addUser( new Admin( "admin", "admin@email.com", "admin", "A001"));
       //Manager part
       university.addUser( new Manager( "kim", "kim@gmail.com", "12345",  "M001" ));
 
        //course part
-      courses.add(new Course("CA", "COMPUTER ARCHITECTURE", 3, CS, 2)); 
+      courses.add(new Course("CA", "COMPUTER ARCHITECTURE", 3, CS, 1)); 
       courses.add(new Course("ITE", "INTERNET TECHNOLOGY", 3, TN, 1) );
       courses.add ( new Course("SE", "SOFTWARE ENGINEERING", 3, CS, 3));
       courses.add( new Course( "AI", "ARTIFICIAL INTELLIGENCE", 3, CS, 4));
@@ -140,9 +140,9 @@ public class App
   }
 
     public static void intruction() {
-      System.out.println("Name: sora, pass:12345");
-      System.out.println("Lecturer: sopheara, pass: pass456");
-      System.out.println("Manager: kim, pass:12345");
+      System.out.println("Name: hubert, pass:12345");
+      System.out.println("Lecturer: gertrude, pass: 12345");
+      System.out.println("Manager: josh, pass:12345");
       System.out.println("Admin: admin, pass: admin");
     }
   }
